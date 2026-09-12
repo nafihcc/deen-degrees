@@ -29,5 +29,5 @@ export function compassPointName(bearing: number): string {
     "N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE",
     "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW",
   ];
-  return names[Math.round(bearing / 22.5) % 16];
+  return names[Math.round(bearing / 22.5) % 16] ?? "N";
 }

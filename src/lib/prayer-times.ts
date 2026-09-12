@@ -278,9 +278,10 @@ export function findNextPrayer(point: GeoPoint, settings: MethodSettings, now = 
   });
   sequence.sort((a, b) => a.at.getTime() - b.at.getTime());
 
-  const idx = sequence.findIndex((item) => item.at.getTime() > now.getTime());
-  const next = sequence[idx];
-  const prev = sequence[Math.max(idx - 1, 0)];
+  const foundIdx = sequence.findIndex((item) => item.at.getTime() > now.getTime());
+  const idx = foundIdx === -1 ? sequence.length - 1 : foundIdx;
+  const next = sequence[idx]!;
+  const prev = sequence[Math.max(idx - 1, 0)]!;
   const span = next.at.getTime() - prev.at.getTime();
   const done = now.getTime() - prev.at.getTime();
 
