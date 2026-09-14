@@ -10,13 +10,20 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CalendarRouteImport } from './routes/calendar'
 import { Route as DhikrRouteImport } from './routes/dhikr'
 import { Route as MethodologyRouteImport } from './routes/methodology'
 import { Route as QiblaRouteImport } from './routes/qibla'
+import { Route as QuranRouteImport } from './routes/quran'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CalendarRoute = CalendarRouteImport.update({
+  id: '/calendar',
+  path: '/calendar',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DhikrRoute = DhikrRouteImport.update({
@@ -34,39 +41,59 @@ const QiblaRoute = QiblaRouteImport.update({
   path: '/qibla',
   getParentRoute: () => rootRouteImport,
 } as any)
+const QuranRoute = QuranRouteImport.update({
+  id: '/quran',
+  path: '/quran',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/calendar': typeof CalendarRoute
   '/dhikr': typeof DhikrRoute
   '/methodology': typeof MethodologyRoute
   '/qibla': typeof QiblaRoute
+  '/quran': typeof QuranRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/calendar': typeof CalendarRoute
   '/dhikr': typeof DhikrRoute
   '/methodology': typeof MethodologyRoute
   '/qibla': typeof QiblaRoute
+  '/quran': typeof QuranRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/calendar': typeof CalendarRoute
   '/dhikr': typeof DhikrRoute
   '/methodology': typeof MethodologyRoute
   '/qibla': typeof QiblaRoute
+  '/quran': typeof QuranRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/dhikr' | '/methodology' | '/qibla'
+  fullPaths: '/' | '/calendar' | '/dhikr' | '/methodology' | '/qibla' | '/quran'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/dhikr' | '/methodology' | '/qibla'
-  id: '__root__' | '/' | '/dhikr' | '/methodology' | '/qibla'
+  to: '/' | '/calendar' | '/dhikr' | '/methodology' | '/qibla' | '/quran'
+  id:
+    | '__root__'
+    | '/'
+    | '/calendar'
+    | '/dhikr'
+    | '/methodology'
+    | '/qibla'
+    | '/quran'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CalendarRoute: typeof CalendarRoute
   DhikrRoute: typeof DhikrRoute
   MethodologyRoute: typeof MethodologyRoute
   QiblaRoute: typeof QiblaRoute
+  QuranRoute: typeof QuranRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -76,6 +103,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/calendar': {
+      id: '/calendar'
+      path: '/calendar'
+      fullPath: '/calendar'
+      preLoaderRoute: typeof CalendarRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/dhikr': {
@@ -99,14 +133,23 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof QiblaRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/quran': {
+      id: '/quran'
+      path: '/quran'
+      fullPath: '/quran'
+      preLoaderRoute: typeof QuranRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CalendarRoute: CalendarRoute,
   DhikrRoute: DhikrRoute,
   MethodologyRoute: MethodologyRoute,
   QiblaRoute: QiblaRoute,
+  QuranRoute: QuranRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
