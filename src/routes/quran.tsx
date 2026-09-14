@@ -37,6 +37,9 @@ interface Ayah {
   audio?: string;
 }
 
+const toArabicDigits = (n: number) =>
+  String(n).replace(/\d/g, (d) => "٠١٢٣٤٥٦٧٨٩"[Number(d)]!);
+
 function QuranPage() {
   const [list, setList] = useState<SurahMeta[]>([]);
   const [current, setCurrent] = useState(1);
@@ -45,6 +48,8 @@ function QuranPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [query, setQuery] = useState("");
+  const [mode, setMode] = useState<"page" | "verse">("page");
+  const [page, setPage] = useState(0);
 
   useEffect(() => {
     fetch("https://api.alquran.cloud/v1/surah")
@@ -68,11 +73,15 @@ function QuranPage() {
       })
       .catch(() => !cancelled && setError("Could not load this surah. Try again."))
       .finally(() => !cancelled && setLoading(false));
+    setPage(0);
     return () => {
       cancelled = true;
     };
   }, [current]);
 
+  const PER_PAGE = 12;
+  const totalPages = Math.ceil(arabic.length / PER_PAGE);
+  const pageAyahs = arabic.slice(page * PER_PAGE, page * PER_PAGE + PER_PAGE);
   const meta = list.find((s) => s.number === current);
   const filtered = list.filter((s) =>
     `${s.number} ${s.englishName} ${s.name}`.toLowerCase().includes(query.toLowerCase()),
@@ -130,15 +139,30 @@ function QuranPage() {
               Surah {current}
               {meta ? ` · ${meta.revelationType}` : ""}
             </p>
-            <p className="text-2xl font-semibold text-deep font-display">
-              {meta ? `${meta.englishName} — ${meta.name}` : "…"}
-            </p>
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <p className="text-2xl font-semibold text-deep font-display">
+                {meta ? `${meta.englishName} — ${meta.name}` : "…"}
+              </p>
+              <div className="flex gap-1 bg-mist rounded-xl p-1">
+                {(["page", "verse"] as const).map((m) => (
+                  <button
+                    key={m}
+                    onClick={() => setMode(m)}
+                    className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition ${
+                      mode === m ? "bg-white text-deep shadow-sm" : "text-deep/50"
+                    }`}
+                  >
+                    {m === "page" ? "Page reading" : "Verse by verse"}
+                  </button>
+                ))}
+              </div>
+            </div>
           </div>
 
           {error && <p className="px-7 py-6 text-sm text-deep/60">{error}</p>}
           {loading && <p className="px-7 py-6 text-sm text-deep/50">Loading verses…</p>}
 
-          {!loading && !error && (
+          {!loading && !error && mode === "verse" && (
             <div className="divide-y divide-hairline">
               {arabic.map((a, i) => (
                 <article key={a.numberInSurah} className="px-7 py-6">
@@ -162,6 +186,62 @@ function QuranPage() {
                   )}
                 </article>
               ))}
+            </div>
+          )}
+
+          {!loading && !error && mode === "page" && (
+            <div>
+              <div className="px-8 sm:px-12 py-10 bg-[color-mix(in_srgb,var(--gold)_7%,white)] border-y border-hairline">
+                <p
+                  dir="rtl"
+                  lang="ar"
+                  className="text-right text-[1.7rem] leading-[2.6] text-deep"
+                  style={{ textAlign: "justify", textAlignLast: "right" }}
+                >
+                  {pageAyahs.map((a) => (
+                    <span key={a.numberInSurah}>
+                      {a.text}{" "}
+                      <span className="text-gold text-lg align-middle tabular-nums">
+                        ﴿{toArabicDigits(a.numberInSurah)}﴾
+                      </span>{" "}
+                    </span>
+                  ))}
+                </p>
+              </div>
+
+              <div className="px-8 sm:px-12 py-8 space-y-3">
+                <p className="text-[11px] uppercase tracking-[0.18em] text-brand/70 font-semibold">
+                  Translation
+                </p>
+                {pageAyahs.map((a) => (
+                  <p key={a.numberInSurah} className="text-sm text-deep/70 leading-relaxed">
+                    <span className="font-semibold text-deep/50 mr-2 tabular-nums">
+                      {a.numberInSurah}
+                    </span>
+                    {english[a.numberInSurah - 1]?.text}
+                  </p>
+                ))}
+              </div>
+
+              <div className="px-8 sm:px-12 py-4 border-t border-hairline flex items-center justify-between gap-3">
+                <button
+                  onClick={() => setPage((p) => Math.max(p - 1, 0))}
+                  disabled={page === 0}
+                  className="px-4 py-2 rounded-xl bg-mist text-sm font-semibold text-deep/70 disabled:opacity-40"
+                >
+                  ← Previous page
+                </button>
+                <span className="text-xs text-deep/50 tabular-nums">
+                  Page {page + 1} of {Math.max(totalPages, 1)}
+                </span>
+                <button
+                  onClick={() => setPage((p) => Math.min(p + 1, totalPages - 1))}
+                  disabled={page >= totalPages - 1}
+                  className="px-4 py-2 rounded-xl bg-mist text-sm font-semibold text-deep/70 disabled:opacity-40"
+                >
+                  Next page →
+                </button>
+              </div>
             </div>
           )}
         </section>
