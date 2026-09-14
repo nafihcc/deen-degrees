@@ -60,7 +60,13 @@ export function LocationProvider({ children }: { children: ReactNode }) {
       }
       const rawSet = window.localStorage.getItem(SET_KEY);
       if (rawSet) {
-        setSettingsState({ ...DEFAULT_SETTINGS, ...(JSON.parse(rawSet) as MethodSettings) });
+        const saved = JSON.parse(rawSet) as MethodSettings;
+        const merged: MethodSettings = { ...DEFAULT_SETTINGS, ...saved };
+        // Angles are whole degrees in this reckoning; snap any half-degree
+        // value left over from an earlier slider.
+        merged.fajrAngle = Math.round(merged.fajrAngle);
+        merged.ishaAngle = Math.round(merged.ishaAngle);
+        setSettingsState(merged);
       }
     } catch {
       /* ignore corrupted storage */

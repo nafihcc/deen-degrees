@@ -178,7 +178,7 @@ export function computePrayerTimes(
   const raw: Record<PrayerKey, number> = {
     fajr: toLocalHours(fajr),
     sunrise: toLocalHours(sunrise),
-    dhuhr: toLocalHours(dhuhr) + 1 / 60, // a minute past zawal
+    dhuhr: toLocalHours(dhuhr), // zawāl itself; the precaution minute follows
     asr: toLocalHours(asr),
     maghrib: toLocalHours(maghrib),
     isha: toLocalHours(isha),
@@ -186,18 +186,16 @@ export function computePrayerTimes(
 
   const times = {} as Record<PrayerKey, Date>;
   (Object.keys(raw) as PrayerKey[]).forEach((key) => {
-    // Sunrise ends Fajr, so it is pulled back (never announced late); every
-    // other entry begins a prayer, so it is pushed forward to the whole minute
-    // — the displayed clock minute is then certainly inside the real time.
-    const isEndTime = key === "sunrise";
-    const precaution = isEndTime
-      ? -settings.precautionMinutes
-      : settings.precautionMinutes;
+    // Sunrise is an astronomical event, not a prayer start: it carries no
+    // precaution and is simply rounded to the nearest minute. Every prayer
+    // start takes the precaution minute and is then rounded to the nearest
+    // minute, so no azan is shown before its real time.
+    const isEvent = key === "sunrise";
+    const precaution = isEvent ? 0 : settings.precautionMinutes;
     const minutes = raw[key] * 60 + precaution + (settings.adjustments[key] ?? 0);
     const d = new Date(date);
     d.setHours(0, 0, 0, 0);
-    const whole = isEndTime ? Math.floor(minutes) : Math.ceil(minutes);
-    times[key] = new Date(d.getTime() + whole * 60_000);
+    times[key] = new Date(d.getTime() + Math.round(minutes) * 60_000);
   });
 
   const { declination, equationOfTime } = sunPosition(jd + dhuhr);
