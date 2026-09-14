@@ -10,11 +10,18 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as DhikrRouteImport } from './routes/dhikr'
 import { Route as MethodologyRouteImport } from './routes/methodology'
+import { Route as QiblaRouteImport } from './routes/qibla'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DhikrRoute = DhikrRouteImport.update({
+  id: '/dhikr',
+  path: '/dhikr',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MethodologyRoute = MethodologyRouteImport.update({
@@ -22,31 +29,44 @@ const MethodologyRoute = MethodologyRouteImport.update({
   path: '/methodology',
   getParentRoute: () => rootRouteImport,
 } as any)
+const QiblaRoute = QiblaRouteImport.update({
+  id: '/qibla',
+  path: '/qibla',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/dhikr': typeof DhikrRoute
   '/methodology': typeof MethodologyRoute
+  '/qibla': typeof QiblaRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/dhikr': typeof DhikrRoute
   '/methodology': typeof MethodologyRoute
+  '/qibla': typeof QiblaRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/dhikr': typeof DhikrRoute
   '/methodology': typeof MethodologyRoute
+  '/qibla': typeof QiblaRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/methodology'
+  fullPaths: '/' | '/dhikr' | '/methodology' | '/qibla'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/methodology'
-  id: '__root__' | '/' | '/methodology'
+  to: '/' | '/dhikr' | '/methodology' | '/qibla'
+  id: '__root__' | '/' | '/dhikr' | '/methodology' | '/qibla'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  DhikrRoute: typeof DhikrRoute
   MethodologyRoute: typeof MethodologyRoute
+  QiblaRoute: typeof QiblaRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -58,6 +78,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/dhikr': {
+      id: '/dhikr'
+      path: '/dhikr'
+      fullPath: '/dhikr'
+      preLoaderRoute: typeof DhikrRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/methodology': {
       id: '/methodology'
       path: '/methodology'
@@ -65,12 +92,21 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MethodologyRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/qibla': {
+      id: '/qibla'
+      path: '/qibla'
+      fullPath: '/qibla'
+      preLoaderRoute: typeof QiblaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  DhikrRoute: DhikrRoute,
   MethodologyRoute: MethodologyRoute,
+  QiblaRoute: QiblaRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
