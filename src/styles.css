@@ -141,6 +141,10 @@
   font-family: var(--font-arabic);
 }
 
+@utility quran-page {
+  background-color: color-mix(in oklab, var(--gold) 5%, var(--surface));
+}
+
 @keyframes drift {
   0% {
     transform: translate(0, 0) scale(1);
