@@ -186,11 +186,18 @@ export function computePrayerTimes(
 
   const times = {} as Record<PrayerKey, Date>;
   (Object.keys(raw) as PrayerKey[]).forEach((key) => {
-    const precaution = key === "sunrise" ? 0 : settings.precautionMinutes;
+    // Sunrise ends Fajr, so it is pulled back (never announced late); every
+    // other entry begins a prayer, so it is pushed forward to the whole minute
+    // — the displayed clock minute is then certainly inside the real time.
+    const isEndTime = key === "sunrise";
+    const precaution = isEndTime
+      ? -settings.precautionMinutes
+      : settings.precautionMinutes;
     const minutes = raw[key] * 60 + precaution + (settings.adjustments[key] ?? 0);
     const d = new Date(date);
     d.setHours(0, 0, 0, 0);
-    times[key] = new Date(d.getTime() + Math.round(minutes * 60_000));
+    const whole = isEndTime ? Math.floor(minutes) : Math.ceil(minutes);
+    times[key] = new Date(d.getTime() + whole * 60_000);
   });
 
   const { declination, equationOfTime } = sunPosition(jd + dhuhr);
