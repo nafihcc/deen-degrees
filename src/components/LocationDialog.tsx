@@ -160,7 +160,7 @@ export function LocationDialog({ open, onClose }: { open: boolean; onClose: () =
                 type="range"
                 min={16}
                 max={21}
-                step={0.5}
+                step={1}
                 value={settings.fajrAngle}
                 onChange={(e) => setSettings({ ...settings, fajrAngle: Number(e.target.value) })}
                 className="w-40 accent-brand"
@@ -171,7 +171,7 @@ export function LocationDialog({ open, onClose }: { open: boolean; onClose: () =
                 type="range"
                 min={15}
                 max={20}
-                step={0.5}
+                step={1}
                 value={settings.ishaAngle}
                 onChange={(e) => setSettings({ ...settings, ishaAngle: Number(e.target.value) })}
                 className="w-40 accent-brand"
