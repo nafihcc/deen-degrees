@@ -1,0 +1,4 @@
+- [ ] Rebuild Quran reader as Arabic-only, authentic page-wise and verse-wise reading with recitation.
+- [ ] Make Surah search/navigation collapsible.
+- [ ] Verify sunrise calculations against trusted online references and correct sunrise only.
+- [ ] Validate Quran reader and sunrise output.
