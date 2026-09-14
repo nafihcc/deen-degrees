@@ -19,7 +19,7 @@ export const Route = createFileRoute("/qibla")({
       },
     ],
   }),
-  component: QiblaPage;
+  component: QiblaPage,
 });
 
 type CompassStyle = "rose" | "dial" | "needle" | "ar";
