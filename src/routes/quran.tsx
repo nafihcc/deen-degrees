@@ -83,7 +83,14 @@ function QuranPage() {
         return response.json();
       })
       .then((payload) => {
-        if (!cancelled) setAyahs(payload.data.ayahs as Ayah[]);
+        if (cancelled) return;
+        const loaded = payload.data.ayahs as Ayah[];
+        if (mode === "ayah") {
+          const surah = payload.data as SurahMeta;
+          setAyahs(loaded.map((ayah) => ({ ...ayah, surah })));
+        } else {
+          setAyahs(loaded);
+        }
       })
       .catch(() => !cancelled && setError("This reading could not be loaded. Please try again."))
       .finally(() => !cancelled && setLoading(false));
@@ -102,7 +109,13 @@ function QuranPage() {
   }, [query, surahs]);
 
   const currentSurah = surahs.find((surah) => surah.number === surahNumber);
-  const pageSurahs = Array.from(new Map(ayahs.map((ayah) => [ayah.surah.number, ayah.surah])).values());
+  const pageSurahs = Array.from(
+    new Map(
+      ayahs
+        .filter((ayah) => ayah.surah)
+        .map((ayah) => [ayah.surah.number, ayah.surah]),
+    ).values(),
+  );
 
   const playAt = (index: number, continueAll = false) => {
     const audio = audioRef.current;
