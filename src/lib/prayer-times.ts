@@ -34,8 +34,6 @@ export interface MethodSettings {
   asrShadowFactor: number;
   /** Extra degrees added past astronomical sunset (disc + refraction). */
   maghribDiscCorrection: number;
-  /** Precaution minutes added to every prayer so the time is certainly in. */
-  precautionMinutes: number;
   /** Per-prayer manual offsets in minutes. */
   adjustments: Record<PrayerKey, number>;
 }
@@ -45,7 +43,6 @@ export const DEFAULT_SETTINGS: MethodSettings = {
   ishaAngle: 18,
   asrShadowFactor: 1,
   maghribDiscCorrection: 1,
-  precautionMinutes: 1,
   adjustments: { fajr: 0, sunrise: 0, dhuhr: 0, asr: 0, maghrib: 0, isha: 0 },
 };
 
