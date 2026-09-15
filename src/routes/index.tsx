@@ -225,17 +225,17 @@ function Home() {
             <div className="flex items-center justify-between">
               <span className="text-2xl">📖</span>
               <span className="text-[10px] font-semibold uppercase tracking-[0.15em] text-brand/60">
-                Arabic · Translation
+                Arabic · Recitation
               </span>
             </div>
             <p className="mt-4 text-xl font-semibold text-deep font-display">Quran Reader</p>
             <p className="mt-2 text-sm text-deep/60 leading-relaxed">
-              All 114 surahs with verse-by-verse translation and full recitation audio.
+              All 114 surahs in Arabic, arranged by Mushaf page or ayah with full recitation.
             </p>
             <div className="mt-5 rounded-2xl bg-white/50 border border-hairline p-4">
-              <p className="text-xs text-deep/50">Al-Fātiḥah · 1:5</p>
-              <p className="mt-1 text-deep font-medium text-sm">
-                "Iyyāka naʿbudu wa iyyāka nastaʿīn."
+              <p className="text-xs text-deep/50">سورة الفاتحة · ١:٥</p>
+              <p dir="rtl" lang="ar" className="mt-1 font-arabic text-lg text-deep">
+                إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ
               </p>
             </div>
           </Link>
