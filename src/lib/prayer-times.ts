@@ -232,13 +232,13 @@ export function prayerBasis(key: PrayerKey, s: MethodSettings): string {
     case "sunrise":
       return "Upper limb clears the visible horizon";
     case "dhuhr":
-      return "One minute past solar transit (zawāl)";
+      return "Solar transit (zawāl)";
     case "asr":
       return s.asrShadowFactor === 1
-        ? "Shafiʿī · shadow = object + its noon shadow"
-        : "Hanafī · shadow = 2× object + its noon shadow";
+        ? "Standard · shadow = object + its noon shadow"
+        : "Hanafi · shadow = 2× object + its noon shadow";
     case "maghrib":
-      return "Whole solar disc below the visible horizon (≈ +4 min)";
+      return "Whole solar disc below the visible horizon";
     case "isha":
       return `Red twilight gone · sun ${s.ishaAngle}° below the horizon`;
   }

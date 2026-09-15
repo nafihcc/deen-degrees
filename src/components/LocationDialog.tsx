@@ -171,7 +171,7 @@ export function LocationDialog({ open, onClose }: { open: boolean; onClose: () =
                         : "border border-hairline text-deep/60"
                     }`}
                   >
-                    {f === 1 ? "Shafiʿī" : "Hanafī"}
+                    {f === 1 ? "Standard" : "Hanafi"}
                   </button>
                 ))}
               </div>
