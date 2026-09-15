@@ -191,8 +191,11 @@ export function computePrayerTimes(
     // start takes the precaution minute and is then rounded to the nearest
     // minute, so no azan is shown before its real time.
     const isEvent = key === "sunrise";
+    // Sunrise must remain the observed astronomical event. Prayer-only
+    // precautions and saved manual azan offsets must never alter it.
     const precaution = isEvent ? 0 : settings.precautionMinutes;
-    const minutes = raw[key] * 60 + precaution + (settings.adjustments[key] ?? 0);
+    const adjustment = isEvent ? 0 : (settings.adjustments[key] ?? 0);
+    const minutes = raw[key] * 60 + precaution + adjustment;
     const d = new Date(date);
     d.setHours(0, 0, 0, 0);
     times[key] = new Date(d.getTime() + Math.round(minutes) * 60_000);
