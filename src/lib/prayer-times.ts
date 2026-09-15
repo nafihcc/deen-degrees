@@ -178,7 +178,7 @@ export function computePrayerTimes(
   const raw: Record<PrayerKey, number> = {
     fajr: toLocalHours(fajr),
     sunrise: toLocalHours(sunrise),
-    dhuhr: toLocalHours(dhuhr), // zawāl itself; the precaution minute follows
+    dhuhr: toLocalHours(dhuhr), // zawāl itself
     asr: toLocalHours(asr),
     maghrib: toLocalHours(maghrib),
     isha: toLocalHours(isha),
@@ -186,16 +186,10 @@ export function computePrayerTimes(
 
   const times = {} as Record<PrayerKey, Date>;
   (Object.keys(raw) as PrayerKey[]).forEach((key) => {
-    // Sunrise is an astronomical event, not a prayer start: it carries no
-    // precaution and is simply rounded to the nearest minute. Every prayer
-    // start takes the precaution minute and is then rounded to the nearest
-    // minute, so no azan is shown before its real time.
+    // Sunrise is the astronomical event itself: no offset of any kind.
     const isEvent = key === "sunrise";
-    // Sunrise must remain the observed astronomical event. Prayer-only
-    // precautions and saved manual azan offsets must never alter it.
-    const precaution = isEvent ? 0 : settings.precautionMinutes;
     const adjustment = isEvent ? 0 : (settings.adjustments[key] ?? 0);
-    const minutes = raw[key] * 60 + precaution + adjustment;
+    const minutes = raw[key] * 60 + adjustment;
     const d = new Date(date);
     d.setHours(0, 0, 0, 0);
     times[key] = new Date(d.getTime() + Math.round(minutes) * 60_000);

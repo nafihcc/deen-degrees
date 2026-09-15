@@ -154,55 +154,11 @@ export function LocationDialog({ open, onClose }: { open: boolean; onClose: () =
           <p className="text-xs font-semibold uppercase tracking-[0.15em] text-deep/50">
             Method settings
           </p>
+          <p className="mt-1 text-xs text-deep/50 leading-relaxed">
+            Fajr {settings.fajrAngle}°, Isha {settings.ishaAngle}° and the full solar disc for
+            Maghrib are fixed by the traditional reckoning and are not adjustable.
+          </p>
           <div className="mt-3 space-y-3 text-sm text-deep/70">
-            <Row label={`Fajr depression · ${settings.fajrAngle}°`}>
-              <input
-                type="range"
-                min={16}
-                max={21}
-                step={1}
-                value={settings.fajrAngle}
-                onChange={(e) => setSettings({ ...settings, fajrAngle: Number(e.target.value) })}
-                className="w-40 accent-brand"
-              />
-            </Row>
-            <Row label={`Isha depression · ${settings.ishaAngle}°`}>
-              <input
-                type="range"
-                min={15}
-                max={20}
-                step={1}
-                value={settings.ishaAngle}
-                onChange={(e) => setSettings({ ...settings, ishaAngle: Number(e.target.value) })}
-                className="w-40 accent-brand"
-              />
-            </Row>
-            <Row label={`Maghrib disc correction · ${settings.maghribDiscCorrection}°`}>
-              <input
-                type="range"
-                min={0.833}
-                max={1.5}
-                step={0.0835}
-                value={settings.maghribDiscCorrection}
-                onChange={(e) =>
-                  setSettings({ ...settings, maghribDiscCorrection: Number(e.target.value) })
-                }
-                className="w-40 accent-brand"
-              />
-            </Row>
-            <Row label={`Precaution · +${settings.precautionMinutes} min`}>
-              <input
-                type="range"
-                min={0}
-                max={5}
-                step={1}
-                value={settings.precautionMinutes}
-                onChange={(e) =>
-                  setSettings({ ...settings, precautionMinutes: Number(e.target.value) })
-                }
-                className="w-40 accent-brand"
-              />
-            </Row>
             <Row label="Asr shadow">
               <div className="flex gap-2">
                 {[1, 2].map((f) => (
