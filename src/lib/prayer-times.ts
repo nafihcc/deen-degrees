@@ -149,7 +149,10 @@ export function computePrayerTimes(
   const ctx: Solar = { jd, latitude };
 
   const dip = horizonDip(elevation);
-  const sunriseAngle = 0.833 + dip;
+  // Sunrise is the standard astronomical event used by published azan
+  // timetables everywhere: upper limb on the visible horizon at 0.833°,
+  // without any elevation or precaution adjustment.
+  const sunriseAngle = 0.833;
   const maghribAngle = settings.maghribDiscCorrection + dip;
 
   // initial guesses in hours
