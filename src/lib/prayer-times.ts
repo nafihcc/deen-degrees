@@ -34,8 +34,6 @@ export interface MethodSettings {
   asrShadowFactor: number;
   /** Extra degrees added past astronomical sunset (disc + refraction). */
   maghribDiscCorrection: number;
-  /** Precaution minutes added to every prayer so the time is certainly in. */
-  precautionMinutes: number;
   /** Per-prayer manual offsets in minutes. */
   adjustments: Record<PrayerKey, number>;
 }
@@ -45,7 +43,6 @@ export const DEFAULT_SETTINGS: MethodSettings = {
   ishaAngle: 18,
   asrShadowFactor: 1,
   maghribDiscCorrection: 1,
-  precautionMinutes: 1,
   adjustments: { fajr: 0, sunrise: 0, dhuhr: 0, asr: 0, maghrib: 0, isha: 0 },
 };
 
@@ -152,7 +149,10 @@ export function computePrayerTimes(
   const ctx: Solar = { jd, latitude };
 
   const dip = horizonDip(elevation);
-  const sunriseAngle = 0.833 + dip;
+  // Sunrise is the standard astronomical event used by published azan
+  // timetables everywhere: upper limb on the visible horizon at 0.833°,
+  // without any elevation or precaution adjustment.
+  const sunriseAngle = 0.833;
   const maghribAngle = settings.maghribDiscCorrection + dip;
 
   // initial guesses in hours
@@ -178,7 +178,7 @@ export function computePrayerTimes(
   const raw: Record<PrayerKey, number> = {
     fajr: toLocalHours(fajr),
     sunrise: toLocalHours(sunrise),
-    dhuhr: toLocalHours(dhuhr), // zawāl itself; the precaution minute follows
+    dhuhr: toLocalHours(dhuhr), // zawāl itself
     asr: toLocalHours(asr),
     maghrib: toLocalHours(maghrib),
     isha: toLocalHours(isha),
@@ -186,16 +186,10 @@ export function computePrayerTimes(
 
   const times = {} as Record<PrayerKey, Date>;
   (Object.keys(raw) as PrayerKey[]).forEach((key) => {
-    // Sunrise is an astronomical event, not a prayer start: it carries no
-    // precaution and is simply rounded to the nearest minute. Every prayer
-    // start takes the precaution minute and is then rounded to the nearest
-    // minute, so no azan is shown before its real time.
+    // Sunrise is the astronomical event itself: no offset of any kind.
     const isEvent = key === "sunrise";
-    // Sunrise must remain the observed astronomical event. Prayer-only
-    // precautions and saved manual azan offsets must never alter it.
-    const precaution = isEvent ? 0 : settings.precautionMinutes;
     const adjustment = isEvent ? 0 : (settings.adjustments[key] ?? 0);
-    const minutes = raw[key] * 60 + precaution + adjustment;
+    const minutes = raw[key] * 60 + adjustment;
     const d = new Date(date);
     d.setHours(0, 0, 0, 0);
     times[key] = new Date(d.getTime() + Math.round(minutes) * 60_000);
@@ -238,13 +232,13 @@ export function prayerBasis(key: PrayerKey, s: MethodSettings): string {
     case "sunrise":
       return "Upper limb clears the visible horizon";
     case "dhuhr":
-      return "One minute past solar transit (zawāl)";
+      return "Solar transit (zawāl)";
     case "asr":
       return s.asrShadowFactor === 1
-        ? "Shafiʿī · shadow = object + its noon shadow"
-        : "Hanafī · shadow = 2× object + its noon shadow";
+        ? "Standard · shadow = object + its noon shadow"
+        : "Hanafi · shadow = 2× object + its noon shadow";
     case "maghrib":
-      return "Whole solar disc below the visible horizon (≈ +4 min)";
+      return "Whole solar disc below the visible horizon";
     case "isha":
       return `Red twilight gone · sun ${s.ishaAngle}° below the horizon`;
   }
