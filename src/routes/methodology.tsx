@@ -13,7 +13,7 @@ export const Route = createFileRoute("/methodology")({
       {
         property: "og:description",
         content:
-          "Every angle, correction and precaution used to compute the azan times, explained step by step.",
+          "Every angle and correction used to compute the azan times, explained step by step.",
       },
     ],
   }),
@@ -67,10 +67,10 @@ function Methodology() {
           reason the upper floors of a tall tower break their fast after the ground floor. Faiz
           reads your elevation automatically and applies this dip.
         </Card>
-        <Card title="A minute of precaution">
-          Because certainty is a condition, a small precaution (one minute by default, adjustable)
-          is added to each prayer. Where a whole region shares one timetable, the time must satisfy
-          the latest place in that region, not a single central point.
+        <Card title="Sunrise">
+          Sunrise is not a prayer start but the astronomical event that ends the time of Fajr, so
+          it is shown exactly as the sun's upper limb reaches the horizon — the same value
+          published azan timetables give, with nothing added or subtracted.
         </Card>
       </div>
 
