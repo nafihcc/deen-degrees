@@ -56,7 +56,7 @@ function Home() {
           <div className="inline-flex items-center gap-2 bg-white/50 backdrop-blur-md border border-hairline rounded-full px-4 py-1.5 self-start">
             <span className="w-2 h-2 rounded-full bg-gold animate-pulse" />
             <span className="text-xs font-medium text-deep/80">
-              Maghrib computed with corrected sunset offset
+              Computed on the traditional Shafiʿī reckoning
             </span>
           </div>
 
@@ -152,11 +152,6 @@ function Home() {
                     <div className="flex-1">
                       <p className="font-semibold text-deep flex items-center gap-2">
                         {PRAYER_LABELS[key]}
-                        {key === "maghrib" && (
-                          <span className="text-[10px] font-semibold bg-gold/20 text-accent-foreground px-2 py-0.5 rounded-full">
-                            Corrected
-                          </span>
-                        )}
                         {isNext && (
                           <span className="text-[10px] font-semibold bg-brand/15 text-brand px-2 py-0.5 rounded-full">
                             Next
