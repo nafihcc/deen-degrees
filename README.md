@@ -1,29 +1,46 @@
-# Welcome to your Lovable project
+# Deen Degrees
 
-This project was built with [Lovable](https://lovable.dev).
+A precise, beautifully crafted Islamic companion web app that computes prayer times using the traditional Shafiʿī reckoning described in classical texts — not the shortened modern conventions.
 
-## Build with Lovable
+## Features
 
-Open your project in the [Lovable editor](https://lovable.dev) and keep building.
+- **Prayer times** — Enter any location and get Fajr, Sunrise, Dhuhr, Asr, Maghrib and Isha, computed from the sun's exact degrees for that spot:
+  - **Fajr** at 20° below the horizon (true dawn — fajr ṣādiq)
+  - **Sunrise** at the standard astronomical horizon (0.833° refraction), matching published azan timetables anywhere in the world
+  - **Dhuhr** at solar transit (zawāl)
+  - **Asr** with the Standard (Shafiʿī) shadow rule or the Hanafi rule — your choice
+  - **Maghrib** when the entire solar disc has sunk below the visible horizon
+  - **Isha** at 18° below the horizon
+- **Method settings** — Adjust the Fajr/Isha angles and pick the Standard or Hanafi Asr; everything else follows the traditional reckoning.
+- **Monthly prayer calendar** — A full month timetable for your location.
+- **Quran reader** — The complete Mushaf in Arabic, in both page view (604 pages) and ayah-by-ayah view, with audio recitation.
+- **Qibla finder** — Multiple compass styles, including an augmented-reality compass.
+- **Dhikr counter** — A tally counter for your daily adhkār.
 
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: connect the project to GitHub and every change made in Lovable is committed straight to your repository.
-- **Full ownership**: this code is yours. Push to your repository and your changes sync back into Lovable, ready for your next prompt.
+## Tech stack
 
-## Development
+- TanStack Start (React 19, TypeScript)
+- Tailwind CSS v4
+- Astronomy-based prayer time engine (no third-party timetable APIs for the core calculations)
 
-Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
+## Getting started
 
 ```sh
 git clone <this-repository-url>
 cd <repository-name>
-npm i
+npm install
 npm run dev
 ```
+
+Then open http://localhost:8080 in your browser.
 
 ## Built with
 
 - TanStack Start
-- TypeScript
 - React
+- TypeScript
 - Tailwind CSS
+
+---
+
+This is made by vibe coded.
