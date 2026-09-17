@@ -6,10 +6,21 @@
 // You can pass additional config via defineConfig({ vite: { ... }, etc... }) if needed.
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
+// GitHub Pages deployment:
+// - Build fully static (prerendered) instead of a server bundle. Lovable's own
+//   sandbox build overrides this, so publishing from Lovable is unaffected.
+// - Set BASE_PATH to "/<repo-name>/" when deploying to a project site
+//   (https://<user>.github.io/<repo-name>/). Leave it unset for a user site.
 export default defineConfig({
   tanstackStart: {
     // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
     // nitro/vite builds from this
     server: { entry: "server" },
+  },
+  nitro: {
+    preset: "static",
+  },
+  vite: {
+    base: process.env.BASE_PATH || "/",
   },
 });
