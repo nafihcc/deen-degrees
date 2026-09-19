@@ -32,8 +32,8 @@ export interface MethodSettings {
   ishaAngle: number;
   /** Shafi'i = 1, Hanafi = 2. */
   asrShadowFactor: number;
-  /** Extra degrees added past astronomical sunset (disc + refraction). */
-  maghribDiscCorrection: number;
+  /** Minutes after visible sunset at which Maghrib enters (fixed by the method). */
+  maghribLagMinutes: number;
   /** Per-prayer manual offsets in minutes. */
   adjustments: Record<PrayerKey, number>;
 }
@@ -42,7 +42,7 @@ export const DEFAULT_SETTINGS: MethodSettings = {
   fajrAngle: 20,
   ishaAngle: 18,
   asrShadowFactor: 1,
-  maghribDiscCorrection: 1,
+  maghribLagMinutes: 4,
   adjustments: { fajr: 0, sunrise: 0, dhuhr: 0, asr: 0, maghrib: 0, isha: 0 },
 };
 
