@@ -206,7 +206,7 @@ export function computePrayerTimes(
     declination,
     equationOfTime,
     horizonDipDegrees: dip,
-    maghribAngle,
+    maghribLagMinutes: settings.maghribLagMinutes,
     timezoneOffsetMinutes: tzOffsetMin,
   };
 }
