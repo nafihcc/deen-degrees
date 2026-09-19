@@ -7,7 +7,7 @@ export const Route = createFileRoute("/methodology")({
       {
         name: "description",
         content:
-          "The full reckoning behind Faiz: 20° true dawn for Fajr, 18° for Isha, the one-degree solar disc correction for Maghrib, horizon dip for elevation and Shafiʿī Asr.",
+          "The full reckoning behind Faiz: 20° true dawn for Fajr, 18° for Isha, Maghrib four minutes after sunset, and Shafiʿī Asr.",
       },
       { property: "og:title", content: "Methodology — How Faiz Computes Prayer Times" },
       {
@@ -36,12 +36,11 @@ function Methodology() {
       </p>
 
       <div className="mt-8 space-y-5">
-        <Card title="Maghrib · the whole disc must set">
-          Astronomical sunset places the centre of the sun on the astronomical horizon. What the
-          law requires is the complete disappearance of the disc below the visible horizon. That
-          adds 44 arc-minutes of refraction plus the sun's 16 arc-minute radius — one full degree,
-          which the earth turns through in about four minutes. Faiz uses the 1° depression, plus
-          the extra horizon dip your elevation creates, so Maghrib is never called early.
+        <Card title="Maghrib · four minutes after sunset">
+          Sunset — the sun's upper limb touching the visible horizon — is the moment published
+          azan timetables list. The law requires the complete disappearance of the whole disc, so
+          Faiz enters Maghrib a fixed four minutes after that sunset, in every location, exactly
+          as the traditional reckoning prescribes.
         </Card>
         <Card title="Fajr · true dawn at 20°">
           The white light of the true dawn (al-fajr al-ṣādiq) appears when the sun is 20° below the

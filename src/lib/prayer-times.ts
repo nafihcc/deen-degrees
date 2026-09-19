@@ -242,7 +242,7 @@ export function prayerBasis(key: PrayerKey, s: MethodSettings): string {
         ? "Standard · shadow = object + its noon shadow"
         : "Hanafi · shadow = 2× object + its noon shadow";
     case "maghrib":
-      return "Whole solar disc below the visible horizon";
+      return `${s.maghribLagMinutes} minutes after sunset`;
     case "isha":
       return `Red twilight gone · sun ${s.ishaAngle}° below the horizon`;
   }
