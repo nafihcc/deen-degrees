@@ -3,10 +3,10 @@
  * described in the reference article:
  *
  *  - Maghrib  : the sun's disc must be fully below the VISIBLE horizon.
- *               Astronomical sunset (centre on the astronomical horizon) plus
- *               44' refraction + 16' solar semi-diameter = 1.0 degree,
- *               i.e. roughly +4 minutes after astronomical sunset. Elevation
- *               adds a further horizon dip.
+ *               Faiz takes the visible sunset itself (upper limb on the
+ *               visible horizon, 0.833 degrees of refraction — the same event
+ *               published azan timetables list as sunset) and enters Maghrib
+ *               a FIXED four minutes after it.
  *  - Fajr     : true dawn (white light) = sun 20 degrees below the
  *               astronomical horizon (19 degrees relative to the visible one).
  *  - Isha     : disappearance of the red twilight = 18 degrees below the
