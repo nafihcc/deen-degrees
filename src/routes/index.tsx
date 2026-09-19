@@ -174,8 +174,8 @@ function Home() {
 
             <div className="px-7 py-4 bg-white/40 border-t border-hairline flex items-center justify-between gap-3">
               <p className="text-xs text-deep/50">
-                Horizon dip {result ? result.horizonDipDegrees.toFixed(2) : "0.00"}° · Maghrib at{" "}
-                {result ? result.maghribAngle.toFixed(2) : "1.00"}° below the astronomical horizon
+                Maghrib enters {result ? result.maghribLagMinutes : 4} minutes after sunset ·{" "}
+                {result ? result.horizonDipDegrees.toFixed(2) : "0.00"}° horizon dip
               </p>
               <Link
                 to="/methodology"
