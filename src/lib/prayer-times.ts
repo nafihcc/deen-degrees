@@ -149,11 +149,10 @@ export function computePrayerTimes(
   const ctx: Solar = { jd, latitude };
 
   const dip = horizonDip(elevation);
-  // Sunrise is the standard astronomical event used by published azan
-  // timetables everywhere: upper limb on the visible horizon at 0.833°,
-  // without any elevation or precaution adjustment.
-  const sunriseAngle = 0.833;
-  const maghribAngle = settings.maghribDiscCorrection + dip;
+  // Sunrise and sunset are the standard astronomical events used by published
+  // azan timetables everywhere: upper limb on the visible horizon at 0.833°,
+  // without any elevation adjustment.
+  const horizonAngle = 0.833;
 
   // initial guesses in hours
   let fajr = 5 / 24;
@@ -165,12 +164,16 @@ export function computePrayerTimes(
 
   for (let i = 0; i < 3; i += 1) {
     fajr = sunAngleTime(ctx, settings.fajrAngle, fajr, "ccw") / 24;
-    sunrise = sunAngleTime(ctx, sunriseAngle, sunrise, "ccw") / 24;
+    sunrise = sunAngleTime(ctx, horizonAngle, sunrise, "ccw") / 24;
     dhuhr = midDay(ctx, dhuhr) / 24;
     asr = sunAngleTime(ctx, asrAngle(ctx, settings.asrShadowFactor, asr), asr, "cw") / 24;
-    maghrib = sunAngleTime(ctx, maghribAngle, maghrib, "cw") / 24;
+    // Maghrib enters a FIXED four minutes after visible sunset.
+    maghrib = sunAngleTime(ctx, horizonAngle, maghrib, "cw") / 24;
     isha = sunAngleTime(ctx, settings.ishaAngle, isha, "cw") / 24;
   }
+
+  const sunset = sunAngleTime(ctx, horizonAngle, 18 / 24, "cw") / 24;
+  maghrib = sunset + settings.maghribLagMinutes / 60;
 
   const tzHours = tzOffsetMin / 60;
   const toLocalHours = (h: number) => h * 24 + tzHours - longitude / 15;
