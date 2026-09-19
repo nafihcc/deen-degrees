@@ -173,8 +173,8 @@ export function computePrayerTimes(
     isha = sunAngleTime(ctx, settings.ishaAngle, isha, "cw") / 24;
   }
 
-  const sunset = sunAngleTime(ctx, horizonAngle, 18 / 24, "cw") / 24;
-  maghrib = sunset + settings.maghribLagMinutes / 60;
+  const sunsetHours = sunAngleTime(ctx, horizonAngle, 18 / 24, "cw");
+  maghrib = (sunsetHours + settings.maghribLagMinutes / 60) / 24;
 
   const tzHours = tzOffsetMin / 60;
   const toLocalHours = (h: number) => h * 24 + tzHours - longitude / 15;
