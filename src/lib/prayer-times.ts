@@ -126,7 +126,8 @@ export interface PrayerTimesResult {
   declination: number;
   equationOfTime: number;
   horizonDipDegrees: number;
-  maghribAngle: number;
+  /** Minutes after visible sunset at which Maghrib enters. */
+  maghribLagMinutes: number;
   timezoneOffsetMinutes: number;
 }
 
