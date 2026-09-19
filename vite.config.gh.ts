@@ -12,7 +12,8 @@ export default defineConfig({
   build: {
     outDir: "dist-gh",
     rollupOptions: {
-      input: "gh-index.html",
+      // entry key "index" produces dist-gh/index.html for GitHub Pages
+      input: { index: new URL("./gh-index.html", import.meta.url).pathname },
     },
   },
 });
