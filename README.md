@@ -28,11 +28,20 @@ A precise, beautifully crafted Islamic companion web app that computes prayer ti
 ```sh
 git clone <this-repository-url>
 cd <repository-name>
-npm install
-npm run dev
+bun install
+bun run dev
 ```
 
-Then open http://localhost:8080 in your browser.
+## Deploying to GitHub Pages
+
+This app is fully static, so it can be hosted directly on GitHub Pages:
+
+1. Push the repository to GitHub (Settings → Pages → Source: **GitHub Actions**).
+2. The included workflow (`.github/workflows/deploy-pages.yml`) builds the site and deploys it on every push to `main`.
+3. The site appears at `https://<username>.github.io/<repository-name>/` — the base path is set automatically from the repository name.
+
+No local server or environment variables are needed for deployment.
+
 
 ## Built with
 

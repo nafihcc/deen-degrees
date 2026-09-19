@@ -3,10 +3,10 @@
  * described in the reference article:
  *
  *  - Maghrib  : the sun's disc must be fully below the VISIBLE horizon.
- *               Astronomical sunset (centre on the astronomical horizon) plus
- *               44' refraction + 16' solar semi-diameter = 1.0 degree,
- *               i.e. roughly +4 minutes after astronomical sunset. Elevation
- *               adds a further horizon dip.
+ *               Faiz takes the visible sunset itself (upper limb on the
+ *               visible horizon, 0.833 degrees of refraction — the same event
+ *               published azan timetables list as sunset) and enters Maghrib
+ *               a FIXED four minutes after it.
  *  - Fajr     : true dawn (white light) = sun 20 degrees below the
  *               astronomical horizon (19 degrees relative to the visible one).
  *  - Isha     : disappearance of the red twilight = 18 degrees below the
@@ -32,8 +32,8 @@ export interface MethodSettings {
   ishaAngle: number;
   /** Shafi'i = 1, Hanafi = 2. */
   asrShadowFactor: number;
-  /** Extra degrees added past astronomical sunset (disc + refraction). */
-  maghribDiscCorrection: number;
+  /** Minutes after visible sunset at which Maghrib enters (fixed by the method). */
+  maghribLagMinutes: number;
   /** Per-prayer manual offsets in minutes. */
   adjustments: Record<PrayerKey, number>;
 }
@@ -42,7 +42,7 @@ export const DEFAULT_SETTINGS: MethodSettings = {
   fajrAngle: 20,
   ishaAngle: 18,
   asrShadowFactor: 1,
-  maghribDiscCorrection: 1,
+  maghribLagMinutes: 4,
   adjustments: { fajr: 0, sunrise: 0, dhuhr: 0, asr: 0, maghrib: 0, isha: 0 },
 };
 
@@ -126,7 +126,8 @@ export interface PrayerTimesResult {
   declination: number;
   equationOfTime: number;
   horizonDipDegrees: number;
-  maghribAngle: number;
+  /** Minutes after visible sunset at which Maghrib enters. */
+  maghribLagMinutes: number;
   timezoneOffsetMinutes: number;
 }
 
@@ -149,11 +150,10 @@ export function computePrayerTimes(
   const ctx: Solar = { jd, latitude };
 
   const dip = horizonDip(elevation);
-  // Sunrise is the standard astronomical event used by published azan
-  // timetables everywhere: upper limb on the visible horizon at 0.833°,
-  // without any elevation or precaution adjustment.
-  const sunriseAngle = 0.833;
-  const maghribAngle = settings.maghribDiscCorrection + dip;
+  // Sunrise and sunset are the standard astronomical events used by published
+  // azan timetables everywhere: upper limb on the visible horizon at 0.833°,
+  // without any elevation adjustment.
+  const horizonAngle = 0.833;
 
   // initial guesses in hours
   let fajr = 5 / 24;
@@ -165,12 +165,16 @@ export function computePrayerTimes(
 
   for (let i = 0; i < 3; i += 1) {
     fajr = sunAngleTime(ctx, settings.fajrAngle, fajr, "ccw") / 24;
-    sunrise = sunAngleTime(ctx, sunriseAngle, sunrise, "ccw") / 24;
+    sunrise = sunAngleTime(ctx, horizonAngle, sunrise, "ccw") / 24;
     dhuhr = midDay(ctx, dhuhr) / 24;
     asr = sunAngleTime(ctx, asrAngle(ctx, settings.asrShadowFactor, asr), asr, "cw") / 24;
-    maghrib = sunAngleTime(ctx, maghribAngle, maghrib, "cw") / 24;
+    // Maghrib enters a FIXED four minutes after visible sunset.
+    maghrib = sunAngleTime(ctx, horizonAngle, maghrib, "cw") / 24;
     isha = sunAngleTime(ctx, settings.ishaAngle, isha, "cw") / 24;
   }
+
+  const sunsetHours = sunAngleTime(ctx, horizonAngle, 18 / 24, "cw");
+  maghrib = (sunsetHours + settings.maghribLagMinutes / 60) / 24;
 
   const tzHours = tzOffsetMin / 60;
   const toLocalHours = (h: number) => h * 24 + tzHours - longitude / 15;
@@ -202,7 +206,7 @@ export function computePrayerTimes(
     declination,
     equationOfTime,
     horizonDipDegrees: dip,
-    maghribAngle,
+    maghribLagMinutes: settings.maghribLagMinutes,
     timezoneOffsetMinutes: tzOffsetMin,
   };
 }
@@ -238,7 +242,7 @@ export function prayerBasis(key: PrayerKey, s: MethodSettings): string {
         ? "Standard · shadow = object + its noon shadow"
         : "Hanafi · shadow = 2× object + its noon shadow";
     case "maghrib":
-      return "Whole solar disc below the visible horizon";
+      return `${s.maghribLagMinutes} minutes after sunset`;
     case "isha":
       return `Red twilight gone · sun ${s.ishaAngle}° below the horizon`;
   }
