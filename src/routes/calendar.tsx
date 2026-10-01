@@ -16,7 +16,7 @@ export const Route = createFileRoute("/calendar")({
       {
         name: "description",
         content:
-          "A full month of Fajr, sunrise, Dhuhr, Asr, Maghrib and Isha times computed from your own coordinates and elevation on the Shafiʿī reckoning.",
+          "A full month of Fajr, sunrise, Dhuhr, Asr, Maghrib and Isha times computed from your own coordinates and elevation on the traditional reckoning.",
       },
       { property: "og:title", content: "Monthly Prayer Timetable | Faiz" },
       {

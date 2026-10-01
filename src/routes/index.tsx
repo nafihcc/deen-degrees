@@ -16,17 +16,17 @@ import { qiblaBearing } from "@/lib/qibla";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Faiz — Accurate Shafiʿī Prayer Times for Your Exact Place" },
+      { title: "Faiz — Prayer Times, Quran, Qibla & Daily Worship Tracker" },
       {
         name: "description",
         content:
-          "Prayer times computed live from your coordinates and elevation: Fajr at true dawn (20°), Isha at 18°, and Maghrib held until the whole solar disc is below the visible horizon.",
+          "Prayer times computed live from your coordinates and elevation: Fajr at true dawn (20°), Isha at 18°, Maghrib four minutes after sunset, plus Quran, Qibla, dhikr and a daily tracker.",
       },
-      { property: "og:title", content: "Faiz — Accurate Shafiʿī Prayer Times" },
+      { property: "og:title", content: "Faiz — Prayer Times, Quran, Qibla & Tracker" },
       {
         property: "og:description",
         content:
-          "Location-aware azan times on the traditional Shafiʿī reckoning, with Quran, Qibla compass and dhikr counter.",
+          "Location-aware prayer times with a Quran reader, Qibla compass, dhikr counter and daily worship tracker.",
       },
     ],
   }),
@@ -51,12 +51,36 @@ function Home() {
 
   return (
     <main className="max-w-7xl mx-auto px-6">
+      <section className="pt-6 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+        {(
+          [
+            { to: "/quran", icon: "📖", title: "Quran", sub: "Mushaf & recitation" },
+            { to: "/qibla", icon: "🧭", title: "Qibla", sub: "AR & compass" },
+            { to: "/dhikr", icon: "📿", title: "Dhikr", sub: "Tally counter" },
+            { to: "/tracker", icon: "📊", title: "Daily Tracker", sub: "Swalat · Istighfar · Quran" },
+            { to: "/calendar", icon: "🗓️", title: "Timetable", sub: "Monthly times" },
+          ] as const
+        ).map((t) => (
+          <Link
+            key={t.to}
+            to={t.to}
+            className="glass-panel rounded-2xl p-4 flex items-center gap-3 hover:-translate-y-0.5 hover:shadow-xl transition"
+          >
+            <span className="text-2xl w-11 h-11 rounded-xl bg-mist grid place-items-center">{t.icon}</span>
+            <span>
+              <span className="block font-semibold text-deep font-display">{t.title}</span>
+              <span className="block text-[11px] text-deep/55">{t.sub}</span>
+            </span>
+          </Link>
+        ))}
+      </section>
+
       <section className="pt-10 pb-16 grid lg:grid-cols-12 gap-8">
         <div className="lg:col-span-5 flex flex-col justify-center">
           <div className="inline-flex items-center gap-2 bg-white/50 backdrop-blur-md border border-hairline rounded-full px-4 py-1.5 self-start">
             <span className="w-2 h-2 rounded-full bg-gold animate-pulse" />
             <span className="text-xs font-medium text-deep/80">
-              Computed on the traditional Shafiʿī reckoning
+              Your daily Islamic companion
             </span>
           </div>
 
@@ -67,8 +91,8 @@ function Home() {
           </h1>
 
           <p className="mt-5 text-deep/60 text-base leading-relaxed max-w-sm">
-            Faiz reads your coordinates and elevation, then computes each azan on the Shafiʿī
-            reckoning — Maghrib held past true sunset, Fajr set at true dawn.
+            Faiz reads your coordinates and elevation, then computes each prayer time — then helps you read Quran, find the Qibla, keep dhikr
+            and track your daily worship.
           </p>
 
           <div className="mt-8 glass-panel rounded-3xl p-6">
