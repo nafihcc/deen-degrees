@@ -37,7 +37,7 @@ const keyOf = (d: Date) =>
 const wakeMin = (w: string) => {
   if (!w) return null;
   const [h, m] = w.split(":").map(Number);
-  return h * 60 + m;
+  return (h ?? 0) * 60 + (m ?? 0);
 };
 const fmtMin = (m: number) =>
   `${String(Math.floor(m / 60)).padStart(2, "0")}:${String(Math.round(m % 60)).padStart(2, "0")}`;
