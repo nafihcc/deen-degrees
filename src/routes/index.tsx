@@ -51,6 +51,30 @@ function Home() {
 
   return (
     <main className="max-w-7xl mx-auto px-6">
+      <section className="pt-6 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+        {(
+          [
+            { to: "/quran", icon: "📖", title: "Quran", sub: "Mushaf & recitation" },
+            { to: "/qibla", icon: "🧭", title: "Qibla", sub: "AR & compass" },
+            { to: "/dhikr", icon: "📿", title: "Dhikr", sub: "Tally counter" },
+            { to: "/tracker", icon: "📊", title: "Daily Tracker", sub: "Swalat · Istighfar · Quran" },
+            { to: "/calendar", icon: "🗓️", title: "Timetable", sub: "Monthly times" },
+          ] as const
+        ).map((t) => (
+          <Link
+            key={t.to}
+            to={t.to}
+            className="glass-panel rounded-2xl p-4 flex items-center gap-3 hover:-translate-y-0.5 hover:shadow-xl transition"
+          >
+            <span className="text-2xl w-11 h-11 rounded-xl bg-mist grid place-items-center">{t.icon}</span>
+            <span>
+              <span className="block font-semibold text-deep font-display">{t.title}</span>
+              <span className="block text-[11px] text-deep/55">{t.sub}</span>
+            </span>
+          </Link>
+        ))}
+      </section>
+
       <section className="pt-10 pb-16 grid lg:grid-cols-12 gap-8">
         <div className="lg:col-span-5 flex flex-col justify-center">
           <div className="inline-flex items-center gap-2 bg-white/50 backdrop-blur-md border border-hairline rounded-full px-4 py-1.5 self-start">
