@@ -8,6 +8,7 @@ const NAV = [
   { to: "/qibla", label: "Qibla" },
   { to: "/quran", label: "Quran" },
   { to: "/dhikr", label: "Dhikr" },
+  { to: "/tracker", label: "Tracker" },
   { to: "/calendar", label: "Calendar" },
 ] as const;
 
@@ -30,7 +31,7 @@ export function AppShell({ children }: { children: ReactNode }) {
           </div>
           <span className="text-lg font-semibold text-deep tracking-tight">Faiz</span>
           <span className="hidden sm:inline text-[10px] uppercase tracking-[0.2em] text-brand/60 mt-1">
-            Shafiʿī Azan
+            Islamic Companion
           </span>
         </Link>
 
@@ -66,8 +67,7 @@ export function AppShell({ children }: { children: ReactNode }) {
 
       <footer className="relative z-10 max-w-7xl mx-auto px-6 py-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs text-deep/50">
         <p>
-          Faiz · prayer times computed on the traditional Shafiʿī reckoning, corrected for the
-          visible horizon and your elevation.
+          Faiz · prayer times, Quran, Qibla, dhikr and a daily worship tracker in one place.
         </p>
         <Link to="/methodology" className="font-semibold text-brand hover:text-deep transition">
           View methodology →

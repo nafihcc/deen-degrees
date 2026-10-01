@@ -77,11 +77,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Faiz — Accurate Shafiʿī Prayer Times" },
+      { title: "Faiz — Prayer Times, Quran, Qibla & Tracker" },
       {
         name: "description",
         content:
-          "Prayer times computed for your exact coordinates and elevation on the traditional Shafiʿī reckoning, with Quran, Qibla compass and dhikr counter.",
+          "Prayer times computed for your exact coordinates and elevation with Quran reader, Qibla compass, dhikr counter and daily worship tracker.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
