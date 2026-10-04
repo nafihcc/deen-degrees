@@ -12,3 +12,4 @@
 - [x] Confirm tracker persistence on GitHub Pages (same browser/device only)
 - [x] Replace green-tinted colours with ink and vermilion; add Mohammed Nafih C C About page
 - [ ] GitHub Pages live deployment — waiting for the owner to connect a GitHub repository and enable Pages
+- [ ] Complete English README for GitHub without naming the site builder; credit vibe coding
