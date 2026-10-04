@@ -10,6 +10,7 @@ const NAV = [
   { to: "/dhikr", label: "Dhikr" },
   { to: "/tracker", label: "Tracker" },
   { to: "/calendar", label: "Calendar" },
+  { to: "/about", label: "About" },
 ] as const;
 
 export function AppShell({ children }: { children: ReactNode }) {
@@ -18,12 +19,6 @@ export function AppShell({ children }: { children: ReactNode }) {
 
   return (
     <div className="relative min-h-screen bg-surface overflow-hidden">
-      <div className="pointer-events-none absolute inset-0">
-        <div className="orb-1 absolute -top-40 -left-32 w-[520px] h-[520px] rounded-full bg-brand/20 blur-[120px]" />
-        <div className="orb-2 absolute top-1/3 -right-40 w-[560px] h-[560px] rounded-full bg-gold/15 blur-[130px]" />
-        <div className="absolute bottom-0 left-1/4 w-[420px] h-[420px] rounded-full bg-mist blur-[110px]" />
-      </div>
-
       <header className="relative z-10 px-6 py-5 flex items-center justify-between gap-4 max-w-7xl mx-auto">
         <Link to="/" className="flex items-center gap-3">
           <div className="w-9 h-9 rounded-xl bg-brand/90 grid place-items-center text-primary-foreground font-display font-bold shadow-lg shadow-brand/20">
@@ -35,7 +30,7 @@ export function AppShell({ children }: { children: ReactNode }) {
           </span>
         </Link>
 
-        <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-deep/70">
+        <nav className="hidden lg:flex items-center gap-5 text-sm font-medium text-deep/70">
           {NAV.map((item) => (
             <Link
               key={item.to}
@@ -69,19 +64,20 @@ export function AppShell({ children }: { children: ReactNode }) {
         <p>
           Faiz · prayer times, Quran, Qibla, dhikr and a daily worship tracker in one place.
         </p>
-        <Link to="/methodology" className="font-semibold text-brand hover:text-deep transition">
-          View methodology →
-        </Link>
+        <div className="flex gap-5">
+          <Link to="/about" className="font-semibold text-brand hover:text-deep transition">About</Link>
+          <Link to="/methodology" className="font-semibold text-brand hover:text-deep transition">View methodology →</Link>
+        </div>
       </footer>
 
-      <nav className="md:hidden sticky bottom-0 z-20 glass-panel rounded-none border-x-0 border-b-0 flex justify-between px-2 py-2">
+      <nav className="lg:hidden sticky bottom-0 z-20 glass-panel rounded-none border-x-0 border-b-0 flex overflow-x-auto px-2 py-2">
         {NAV.map((item) => (
           <Link
             key={item.to}
             to={item.to}
             activeProps={{ className: "text-brand bg-mist/70" }}
             activeOptions={{ exact: item.to === "/" }}
-            className="flex-1 text-center text-[11px] font-medium text-deep/60 py-2 rounded-xl"
+            className="min-w-[74px] flex-1 text-center text-[11px] font-medium text-deep/60 py-2 rounded-xl"
           >
             {item.label}
           </Link>

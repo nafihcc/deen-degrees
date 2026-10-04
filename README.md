@@ -16,6 +16,8 @@ A precise, beautifully crafted Islamic companion web app that computes prayer ti
 - **Quran reader** — The complete Mushaf in Arabic, in both page view (604 pages) and ayah-by-ayah view, with audio recitation.
 - **Qibla finder** — Multiple compass styles, including an augmented-reality compass.
 - **Dhikr counter** — A tally counter for your daily adhkār.
+- **Daily tracker** — Log swalat, istighfar, Quran pages and wake-up time; entries persist in the same browser on the same device, not across devices. Clearing browser site data removes them.
+- **About** — Meet Mohammed Nafih C C and contact him on WhatsApp.
 
 ## Tech stack
 
