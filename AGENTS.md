@@ -11,4 +11,4 @@
 
 - Keep the daily tracker browser-local in the static GitHub Pages build; no account or server exists to sync entries between devices.
 - Host the static app through the GitHub Pages workflow with the repository base path; TanStack Start's server output is not the Pages artifact.
-- Use an absolute published asset URL for the About portrait so GitHub Pages can display it outside Lovable's relative asset path namespace.
+- Use an absolute published asset URL for the About portrait so GitHub Pages can display it outside the origin-specific relative asset path namespace.
