@@ -10,7 +10,6 @@ const NAV = [
   { to: "/dhikr", label: "Dhikr" },
   { to: "/tracker", label: "Tracker" },
   { to: "/calendar", label: "Calendar" },
-  { to: "/about", label: "About" },
 ] as const;
 
 export function AppShell({ children }: { children: ReactNode }) {
@@ -19,7 +18,7 @@ export function AppShell({ children }: { children: ReactNode }) {
 
   return (
     <div className="relative min-h-screen bg-surface overflow-hidden">
-      <header className="relative z-10 px-6 py-5 flex items-center justify-between gap-4 max-w-7xl mx-auto">
+      <header className="relative z-10 px-4 sm:px-6 py-5 flex items-center justify-between gap-2 sm:gap-4 max-w-7xl mx-auto">
         <Link to="/" className="flex items-center gap-3">
           <div className="w-9 h-9 rounded-xl bg-brand/90 grid place-items-center text-primary-foreground font-display font-bold shadow-lg shadow-brand/20">
             F
@@ -44,14 +43,17 @@ export function AppShell({ children }: { children: ReactNode }) {
           ))}
         </nav>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3">
+          <Link to="/about" className="text-sm font-semibold text-brand hover:text-deep transition whitespace-nowrap">
+            About
+          </Link>
           <span className="hidden sm:inline text-xs font-medium text-deep/60 bg-white/60 backdrop-blur-md px-3 py-2 rounded-xl border border-hairline">
             {location.name}
             {location.region ? `, ${location.region}` : ""}
           </span>
           <button
             onClick={() => setOpen(true)}
-            className="bg-brand text-primary-foreground text-sm font-semibold px-4 py-2.5 rounded-xl shadow-lg shadow-brand/25 hover:bg-deep transition"
+            className="bg-brand text-primary-foreground text-xs sm:text-sm font-semibold px-3 sm:px-4 py-2.5 rounded-xl shadow-lg shadow-brand/25 hover:bg-deep transition whitespace-nowrap"
           >
             Set Location
           </button>

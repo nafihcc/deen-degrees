@@ -26,8 +26,8 @@ function AboutPage() {
         <span>Faiz / About</span>
         <span>01 — The person behind it</span>
       </div>
-      <div className="mt-10 grid lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)] gap-10 lg:gap-16 items-start">
-        <div className="order-2 lg:order-1 flex flex-col items-start lg:pt-10">
+      <div className="mt-10 grid md:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)] gap-10 lg:gap-16 items-start">
+        <div className="order-2 md:order-1 flex flex-col items-start md:pt-6 lg:pt-10">
           <p className="text-sm font-semibold text-gold uppercase">About us</p>
           <h1 className="mt-5 text-5xl sm:text-6xl lg:text-7xl leading-[1.08] font-semibold text-deep break-words">
             Mohammed<br className="hidden sm:block" /> Nafih C C
@@ -46,7 +46,7 @@ function AboutPage() {
           </a>
           <p className="mt-3 text-sm text-deep/55">+91 90482 91729</p>
         </div>
-        <div className="order-1 lg:order-2">
+        <div className="order-1 md:order-2">
           <div className="aspect-[4/4.1] w-full max-h-[650px] overflow-hidden bg-mist">
             <img src={portraitUrl} alt="Mohammed Nafih C C" className="w-full h-full object-cover object-[37%_center]" />
           </div>
