@@ -16,17 +16,17 @@ import { qiblaBearing } from "@/lib/qibla";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Faiz — Prayer Times, Quran, Qibla & Daily Worship Tracker" },
+      { title: "Faiz — Prayer Times, Quran, Qibla & Daily Worship" },
       {
         name: "description",
         content:
-          "Prayer times computed live from your coordinates and elevation: Fajr at true dawn (20°), Isha at 18°, Maghrib four minutes after sunset, plus Quran, Qibla, dhikr and a daily tracker.",
+          "Prayer times computed live from your coordinates and elevation: Fajr at true dawn (20°), Isha at 18°, Maghrib four minutes after sunset, plus Quran, Qibla and dhikr.",
       },
-      { property: "og:title", content: "Faiz — Prayer Times, Quran, Qibla & Tracker" },
+      { property: "og:title", content: "Faiz — Prayer Times, Quran, Qibla & Daily Worship" },
       {
         property: "og:description",
         content:
-          "Location-aware prayer times with a Quran reader, Qibla compass, dhikr counter and daily worship tracker.",
+          "Location-aware prayer times with a Quran reader, Qibla compass and dhikr counter.",
       },
     ],
   }),
@@ -92,7 +92,7 @@ function Home() {
 
           <p className="mt-5 text-deep/60 text-base leading-relaxed max-w-sm">
             Faiz reads your coordinates and elevation, then computes each prayer time — then helps you read Quran, find the Qibla, keep dhikr
-            and track your daily worship.
+             and track your daily worship.
           </p>
 
           <div className="mt-8 glass-panel rounded-3xl p-6">

@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AboutRouteImport } from './routes/about'
 import { Route as CalendarRouteImport } from './routes/calendar'
 import { Route as DhikrRouteImport } from './routes/dhikr'
 import { Route as MethodologyRouteImport } from './routes/methodology'
@@ -20,6 +21,11 @@ import { Route as TrackerRouteImport } from './routes/tracker'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CalendarRoute = CalendarRouteImport.update({
@@ -55,6 +61,7 @@ const TrackerRoute = TrackerRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/calendar': typeof CalendarRoute
   '/dhikr': typeof DhikrRoute
   '/methodology': typeof MethodologyRoute
@@ -64,6 +71,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/calendar': typeof CalendarRoute
   '/dhikr': typeof DhikrRoute
   '/methodology': typeof MethodologyRoute
@@ -74,6 +82,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/calendar': typeof CalendarRoute
   '/dhikr': typeof DhikrRoute
   '/methodology': typeof MethodologyRoute
@@ -85,6 +94,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/about'
     | '/calendar'
     | '/dhikr'
     | '/methodology'
@@ -94,6 +104,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/about'
     | '/calendar'
     | '/dhikr'
     | '/methodology'
@@ -103,6 +114,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/about'
     | '/calendar'
     | '/dhikr'
     | '/methodology'
@@ -113,6 +125,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
   CalendarRoute: typeof CalendarRoute
   DhikrRoute: typeof DhikrRoute
   MethodologyRoute: typeof MethodologyRoute
@@ -128,6 +141,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/calendar': {
@@ -177,6 +197,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
   CalendarRoute: CalendarRoute,
   DhikrRoute: DhikrRoute,
   MethodologyRoute: MethodologyRoute,
