@@ -2,6 +2,9 @@ import { createFileRoute } from "@tanstack/react-router";
 import { MessageCircle, ArrowUpRight } from "lucide-react";
 import portrait from "@/assets/nafih-portrait.png.asset.json";
 
+// GitHub Pages cannot resolve Lovable's relative asset paths on its own domain.
+const portraitUrl = `https://deen-degrees.lovable.app${portrait.url}`;
+
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
@@ -45,7 +48,7 @@ function AboutPage() {
         </div>
         <div className="order-1 lg:order-2">
           <div className="aspect-[4/4.1] w-full max-h-[650px] overflow-hidden bg-mist">
-            <img src={portrait.url} alt="Mohammed Nafih C C" className="w-full h-full object-cover object-[37%_center]" />
+            <img src={portraitUrl} alt="Mohammed Nafih C C" className="w-full h-full object-cover object-[37%_center]" />
           </div>
           <p className="mt-3 text-xs text-deep/55">Mohammed Nafih C C</p>
         </div>
