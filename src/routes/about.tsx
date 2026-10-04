@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { MessageCircle, ArrowUpRight } from "lucide-react";
 import portrait from "@/assets/nafih-portrait.jpg.asset.json";
 
-// GitHub Pages cannot resolve Lovable's relative asset paths on its own domain.
+// GitHub Pages cannot resolve this relative media path on its own domain.
 const portraitUrl = `https://deen-degrees.lovable.app${portrait.url}`;
 
 export const Route = createFileRoute("/about")({
