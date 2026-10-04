@@ -166,7 +166,7 @@ function TrackerPage() {
     <main className="max-w-7xl mx-auto px-6 py-10">
       <h1 className="text-4xl font-semibold text-deep font-display tracking-tight">Daily tracker</h1>
       <p className="mt-2 text-sm text-deep/60">
-        Tap a day, mark your swalat, istighfar, Quran pages and wake-up time. Saved on this device.
+         Tap a day to log swalat, istighfar, Quran pages and wake-up time. Entries stay in this browser on this device, including on GitHub Pages; clearing its site data removes them.
       </p>
 
       <section className="mt-8 grid sm:grid-cols-2 lg:grid-cols-4 gap-4">

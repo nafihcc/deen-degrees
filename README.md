@@ -1,55 +1,50 @@
-# Deen Degrees
+# Faiz
 
-A precise, beautifully crafted Islamic companion web app that computes prayer times using the traditional Shafiʿī reckoning described in classical texts — not the shortened modern conventions.
+Faiz is an Islamic companion website for prayer times, Quran reading, finding the Qibla, daily dhikr and personal worship tracking. It is designed around the traditional prayer-time reckoning explained on its Methodology page.
 
-## Features
+## What you can do
 
-- **Prayer times** — Enter any location and get Fajr, Sunrise, Dhuhr, Asr, Maghrib and Isha, computed from the sun's exact degrees for that spot:
-  - **Fajr** at 20° below the horizon (true dawn — fajr ṣādiq)
-  - **Sunrise** at the standard astronomical horizon (0.833° refraction), matching published azan timetables anywhere in the world
-  - **Dhuhr** at solar transit (zawāl)
-  - **Asr** with the Standard (Shafiʿī) shadow rule or the Hanafi rule — your choice
-  - **Maghrib** when the entire solar disc has sunk below the visible horizon
-  - **Isha** at 18° below the horizon
-- **Method settings** — Adjust the Fajr/Isha angles and pick the Standard or Hanafi Asr; everything else follows the traditional reckoning.
-- **Monthly prayer calendar** — A full month timetable for your location.
-- **Quran reader** — The complete Mushaf in Arabic, in both page view (604 pages) and ayah-by-ayah view, with audio recitation.
-- **Qibla finder** — Multiple compass styles, including an augmented-reality compass.
-- **Dhikr counter** — A tally counter for your daily adhkār.
+- **Check prayer times** for a chosen location: Fajr, sunrise, Dhuhr, Asr, Maghrib and Isha. Fajr defaults to 20° below the astronomical horizon; sunrise uses the standard 0.833° horizon; Dhuhr uses solar transit; Maghrib is fixed at four minutes after calculated sunset; Isha defaults to 18°. Choose Standard or Hanafi Asr and adjust the Fajr and Isha angles in method settings.
+- **View a monthly timetable** for your selected location.
+- **Read the Quran** in Arabic, by one of 604 Mushaf pages or by individual ayah, with Mishary Alafasy recitation and a collapsible Surah search. Quran text and audio load from [AlQuran Cloud](https://alquran.cloud/), so an internet connection is required.
+- **Find the Qibla** with compass views or a camera overlay. Device orientation and camera modes require a compatible device, browser permission and a secure connection.
+- **Count dhikr** with a personal tally counter.
+- **Track your daily worship**: record swalat, istighfar, Quran pages and wake-up time for each calendar day, then compare recent averages with the previous week. An earlier wake-up time is treated as an improvement.
+- **Meet the creator** on the About page and get in touch by WhatsApp.
 
-## Tech stack
+## Your data
 
-- TanStack Start (React 19, TypeScript)
+Tracker entries, dhikr totals and location settings are saved in your browser on this device. They remain available when you reopen the same site in the same browser, including on GitHub Pages. There is no account or cross-device sync. Private/incognito sessions, clearing site data, or changing the site's address can remove or separate saved entries. Your device's browser permissions control location, orientation and camera access.
+
+## Technology
+
+- React 19 and TypeScript with TanStack Start
 - Tailwind CSS v4
-- Astronomy-based prayer time engine (no third-party timetable APIs for the core calculations)
+- Client-side solar calculations for prayer times; no timetable API is needed for those calculations
+- A separate static Vite build for GitHub Pages
 
-## Getting started
+## Run the project
+
+Install [Bun](https://bun.sh/) and run:
 
 ```sh
-git clone <this-repository-url>
-cd <repository-name>
 bun install
 bun run dev
 ```
 
-## Deploying to GitHub Pages
+To prepare the GitHub Pages version locally, run `bun run build:gh`. The standard `bun run build` is the TanStack Start build, not the Pages artifact.
 
-This app is fully static, so it can be hosted directly on GitHub Pages:
+## Publish on GitHub Pages
 
-1. Push the repository to GitHub (Settings → Pages → Source: **GitHub Actions**).
-2. The included workflow (`.github/workflows/deploy-pages.yml`) builds the site and deploys it on every push to `main`.
-3. The site appears at `https://<username>.github.io/<repository-name>/` — the base path is set automatically from the repository name.
+1. Put this project in a GitHub repository named **faiz**, with its default branch set to `main`.
+2. In the repository's **Settings → Pages**, select **GitHub Actions** as the build and deployment source.
+3. The included workflow deploys whenever you push to `main`. You can also run **Deploy to GitHub Pages** from the repository's **Actions** tab.
+4. Once deployment finishes, open `https://<your-username>.github.io/faiz/` (or the URL shown in the Pages settings). The workflow configures the repository subpath automatically.
 
-No local server or environment variables are needed for deployment.
+No project-specific API keys are needed for this static deployment. Quran reading still requires an internet connection; the camera and compass depend on browser support.
 
+## Creator
 
-## Built with
+Mohammed Nafih C C · [WhatsApp](https://wa.me/919048291729)
 
-- TanStack Start
-- React
-- TypeScript
-- Tailwind CSS
-
----
-
-This is made by vibe coded.
+Made through vibe coding.
