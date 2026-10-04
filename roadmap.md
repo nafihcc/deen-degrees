@@ -13,3 +13,4 @@
 - [x] Replace green-tinted colours with ink and vermilion; add Mohammed Nafih C C About page
 - [ ] GitHub Pages live deployment — waiting for the owner to connect a GitHub repository and enable Pages
 - [x] Complete English README for GitHub without naming the site builder; credit vibe coding
+- [x] Make the About page visibly reachable from the header at desktop and mobile widths
