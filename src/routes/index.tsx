@@ -28,6 +28,8 @@ export const Route = createFileRoute("/")({
         content:
           "Location-aware prayer times with a Quran reader, Qibla compass and dhikr counter.",
       },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Home,
@@ -77,7 +79,7 @@ function Home() {
 
       <section className="pt-10 pb-16 grid lg:grid-cols-12 gap-8">
         <div className="lg:col-span-5 flex flex-col justify-center">
-          <div className="inline-flex items-center gap-2 bg-white/50 backdrop-blur-md border border-hairline rounded-full px-4 py-1.5 self-start">
+          <div className="inline-flex items-center gap-2 bg-panel/50 backdrop-blur-md border border-hairline rounded-full px-4 py-1.5 self-start">
             <span className="w-2 h-2 rounded-full bg-gold animate-pulse" />
             <span className="text-xs font-medium text-deep/80">
               Your daily Islamic companion
@@ -196,7 +198,7 @@ function Home() {
               })}
             </div>
 
-            <div className="px-7 py-4 bg-white/40 border-t border-hairline flex items-center justify-between gap-3">
+            <div className="px-7 py-4 bg-panel/40 border-t border-hairline flex items-center justify-between gap-3">
               <p className="text-xs text-deep/50">
                 Maghrib enters {result ? result.maghribLagMinutes : 4} minutes after sunset ·{" "}
                 {result ? result.horizonDipDegrees.toFixed(2) : "0.00"}° horizon dip
@@ -251,7 +253,7 @@ function Home() {
             <p className="mt-2 text-sm text-deep/60 leading-relaxed">
               All 114 surahs in Arabic, arranged by Mushaf page or ayah with full recitation.
             </p>
-            <div className="mt-5 rounded-2xl bg-white/50 border border-hairline p-4">
+            <div className="mt-5 rounded-2xl bg-panel/50 border border-hairline p-4">
               <p className="text-xs text-deep/50">سورة الفاتحة · ١:٥</p>
               <p dir="rtl" lang="ar" className="mt-1 font-arabic text-lg text-deep">
                 إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ
@@ -280,7 +282,7 @@ function Home() {
                       "conic-gradient(var(--gold) 0deg, var(--gold) 252deg, transparent 252deg)",
                   }}
                 />
-                <div className="relative w-[74px] h-[74px] rounded-full bg-white grid place-items-center">
+                <div className="relative w-[74px] h-[74px] rounded-full bg-panel grid place-items-center">
                   <div className="text-center">
                     <p className="text-2xl font-semibold text-deep font-display">33</p>
                     <p className="text-[9px] uppercase tracking-widest text-deep/50">/ 33</p>

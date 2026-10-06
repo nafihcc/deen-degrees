@@ -15,6 +15,8 @@ export const Route = createFileRoute("/methodology")({
         content:
           "Every angle and correction used to compute the azan times, explained step by step.",
       },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Methodology,

@@ -17,6 +17,8 @@ export const Route = createFileRoute("/qibla")({
         property: "og:description",
         content: "Four ways to face the Kaʿbah, including a camera-based augmented-reality overlay.",
       },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: QiblaPage,
@@ -184,7 +186,7 @@ function CompassGraphic({
     <div className="relative w-[280px] h-[280px] grid place-items-center">
       {style === "rose" && (
         <div
-          className="absolute inset-0 rounded-full border border-hairline bg-white/60 transition-transform duration-300"
+          className="absolute inset-0 rounded-full border border-hairline bg-panel/60 transition-transform duration-300"
           style={{ transform: `rotate(${rotation}deg)` }}
         >
           {Array.from({ length: 72 }).map((_, i) => (
@@ -219,11 +221,11 @@ function CompassGraphic({
           style={{
             transform: `rotate(${rotation}deg)`,
             background:
-              "conic-gradient(from 0deg, color-mix(in oklab, var(--gold) 55%, white), color-mix(in oklab, var(--brand) 35%, white), color-mix(in oklab, var(--gold) 55%, white))",
-            boxShadow: "inset 0 0 40px rgba(0,0,0,0.12)",
+              "var(--dial-fill)",
+            boxShadow: "var(--dial-shadow)",
           }}
         >
-          <div className="absolute inset-6 rounded-full bg-white/70 backdrop-blur-md border border-hairline" />
+          <div className="absolute inset-6 rounded-full bg-panel/70 backdrop-blur-md border border-hairline" />
           {Array.from({ length: 12 }).map((_, i) => (
             <span
               key={i}
@@ -262,7 +264,7 @@ function CompassGraphic({
 
       <div
         className={`relative z-10 w-24 h-24 rounded-full grid place-items-center text-center ${
-          aligned ? "bg-brand text-primary-foreground" : "bg-white/85 text-deep"
+          aligned ? "bg-brand text-primary-foreground" : "bg-panel/85 text-deep"
         } border border-hairline shadow-lg transition-colors`}
       >
         <div>
@@ -332,7 +334,7 @@ function ArView({
   const withinView = Math.abs(offset) < 45;
 
   return (
-    <div className="relative w-full aspect-[3/4] sm:aspect-video rounded-2xl overflow-hidden bg-deep">
+    <div className="relative w-full aspect-[3/4] sm:aspect-video rounded-2xl overflow-hidden bg-overlay">
       <video ref={videoRef} playsInline muted className="absolute inset-0 w-full h-full object-cover" />
       <div className="absolute inset-0">
         {withinView ? (
@@ -343,7 +345,7 @@ function ArView({
             <span className="text-5xl drop-shadow-lg">🕋</span>
             <p
               className={`mt-1 text-xs font-semibold px-2 py-1 rounded-full ${
-                aligned ? "bg-brand text-primary-foreground" : "bg-white/80 text-deep"
+                aligned ? "bg-brand text-primary-foreground" : "bg-panel/80 text-deep"
               }`}
             >
               {aligned ? "Facing the Kaʿbah" : `${Math.round(Math.abs(offset))}° off`}
@@ -351,14 +353,14 @@ function ArView({
           </div>
         ) : (
           <div className="absolute inset-x-0 bottom-6 text-center">
-            <p className="inline-block bg-white/85 text-deep text-sm font-semibold px-4 py-2 rounded-full">
+            <p className="inline-block bg-panel/85 text-deep text-sm font-semibold px-4 py-2 rounded-full">
               Turn {offset > 0 ? "right →" : "← left"}{" "}
               {Math.round(Math.abs(offset))}°
             </p>
           </div>
         )}
         {!listening && (
-          <p className="absolute top-4 inset-x-4 text-center text-xs text-white/90 bg-deep/60 rounded-full py-2">
+          <p className="absolute top-4 inset-x-4 text-center text-xs text-on-overlay/90 bg-overlay/60 rounded-full py-2">
             Enable the device compass for the marker to follow your movement.
           </p>
         )}
