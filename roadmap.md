@@ -1,5 +1,8 @@
 # Roadmap
 
+- [ ] Add saved light/dark switch and theme all pages without green tones
+- [ ] Verify dark mode and location controls, publish website, and check GitHub Pages update
+
 - [x] Prayer time engine, Quran reader, Qibla, Dhikr, Calendar, Methodology pages
 - [x] Sunrise matches published azan timetables everywhere (0.833°, no adjustments)
 - [x] Remove precaution minutes / 1-minute dhuhr tool; Standard & Hanafi Asr only

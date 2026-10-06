@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { useState, type ReactNode } from "react";
 import { useLocationSettings } from "@/context/location";
 import { LocationDialog } from "@/components/LocationDialog";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 const NAV = [
   { to: "/", label: "Prayer Times" },
@@ -44,10 +45,11 @@ export function AppShell({ children }: { children: ReactNode }) {
         </nav>
 
         <div className="flex items-center gap-2 sm:gap-3">
+          <ThemeToggle />
           <Link to="/about" className="text-sm font-semibold text-brand hover:text-deep transition whitespace-nowrap">
             About
           </Link>
-          <span className="hidden sm:inline text-xs font-medium text-deep/60 bg-white/60 backdrop-blur-md px-3 py-2 rounded-xl border border-hairline">
+          <span className="hidden sm:inline text-xs font-medium text-deep/60 bg-panel/60 backdrop-blur-md px-3 py-2 rounded-xl border border-hairline">
             {location.name}
             {location.region ? `, ${location.region}` : ""}
           </span>

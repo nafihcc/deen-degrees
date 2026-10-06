@@ -61,9 +61,9 @@ export function LocationDialog({ open, onClose }: { open: boolean; onClose: () =
       <button
         aria-label="Close"
         onClick={onClose}
-        className="absolute inset-0 bg-deep/40 backdrop-blur-sm"
+        className="absolute inset-0 bg-overlay/60 backdrop-blur-sm"
       />
-      <div className="relative w-full sm:max-w-lg max-h-[92vh] overflow-y-auto glass-panel rounded-t-3xl sm:rounded-3xl bg-white/85 p-6">
+      <div role="dialog" aria-modal="true" aria-label="Location and method" className="relative w-full sm:max-w-lg max-h-[92vh] overflow-y-auto glass-panel rounded-t-3xl sm:rounded-3xl bg-panel/95 p-6">
         <div className="flex items-start justify-between">
           <div>
             <p className="text-xs uppercase tracking-[0.18em] text-brand/70 font-semibold">
@@ -93,11 +93,11 @@ export function LocationDialog({ open, onClose }: { open: boolean; onClose: () =
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Kozhikode, Kasaragod, Dubai…"
-            className="mt-2 w-full rounded-2xl border border-hairline bg-white/70 px-4 py-3 text-sm text-deep outline-none focus:border-brand/50"
+            className="mt-2 w-full rounded-2xl border border-hairline bg-panel/70 px-4 py-3 text-sm text-deep outline-none focus:border-brand/50"
           />
           {searching && <p className="mt-2 text-xs text-deep/40">Searching…</p>}
           {results.length > 0 && (
-            <ul className="mt-2 rounded-2xl border border-hairline bg-white/80 divide-y divide-mist overflow-hidden">
+            <ul className="mt-2 rounded-2xl border border-hairline bg-panel/80 divide-y divide-mist overflow-hidden">
               {results.map((r) => (
                 <li key={`${r.latitude},${r.longitude}`}>
                   <button
@@ -127,19 +127,19 @@ export function LocationDialog({ open, onClose }: { open: boolean; onClose: () =
               value={lat}
               onChange={(e) => setLat(e.target.value)}
               placeholder="Latitude"
-              className="rounded-2xl border border-hairline bg-white/70 px-3 py-2.5 text-sm text-deep outline-none focus:border-brand/50"
+              className="rounded-2xl border border-hairline bg-panel/70 px-3 py-2.5 text-sm text-deep outline-none focus:border-brand/50"
             />
             <input
               value={lng}
               onChange={(e) => setLng(e.target.value)}
               placeholder="Longitude"
-              className="rounded-2xl border border-hairline bg-white/70 px-3 py-2.5 text-sm text-deep outline-none focus:border-brand/50"
+              className="rounded-2xl border border-hairline bg-panel/70 px-3 py-2.5 text-sm text-deep outline-none focus:border-brand/50"
             />
             <input
               value={elev}
               onChange={(e) => setElev(e.target.value)}
               placeholder="Elev m"
-              className="rounded-2xl border border-hairline bg-white/70 px-3 py-2.5 text-sm text-deep outline-none focus:border-brand/50"
+              className="rounded-2xl border border-hairline bg-panel/70 px-3 py-2.5 text-sm text-deep outline-none focus:border-brand/50"
             />
           </div>
           <button
