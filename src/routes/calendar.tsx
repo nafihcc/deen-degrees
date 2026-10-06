@@ -94,7 +94,7 @@ function CalendarPage() {
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="bg-white/50 border-b border-hairline text-deep/60">
+              <tr className="bg-panel/50 border-b border-hairline text-deep/60">
                 <th className="text-left font-semibold px-5 py-3">Date</th>
                 {PRAYER_ORDER.map((k) => (
                   <th key={k} className="text-right font-semibold px-5 py-3">

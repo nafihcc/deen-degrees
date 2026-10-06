@@ -13,3 +13,4 @@
 - Host the static app through the GitHub Pages workflow with the repository base path; TanStack Start's server output is not the Pages artifact.
 - Use an absolute published asset URL for the About portrait so GitHub Pages can display it outside the origin-specific relative asset path namespace.
 - The GitHub Pages SPA build skips the root html/head shell (VITE_STATIC_SPA define); rendering <html> plus HeadContent inside #root freezes the page.
+- Theme switching applies semantic CSS tokens through the document dark class and saves only the theme preference locally, so the same control works in hosted and static Pages builds without altering tracker data.

@@ -15,6 +15,8 @@ export const Route = createFileRoute("/dhikr")({
         property: "og:description",
         content: "Count your dhikr with targets, haptic feedback and totals that persist.",
       },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: DhikrPage,
@@ -145,7 +147,7 @@ function DhikrPage() {
                 background: `conic-gradient(var(--gold) 0deg, var(--gold) ${progress * 360}deg, transparent ${progress * 360}deg)`,
               }}
             />
-            <div className="relative w-44 h-44 rounded-full bg-white grid place-items-center shadow-inner">
+            <div className="relative w-44 h-44 rounded-full bg-panel grid place-items-center shadow-inner">
               <div className="text-center">
                 <p className="text-6xl font-semibold text-deep font-display tabular-nums">
                   {count}

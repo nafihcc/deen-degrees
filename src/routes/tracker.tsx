@@ -106,7 +106,7 @@ function TrackerPage() {
   }, [logs, today]);
 
   const counter = (label: string, field: "swalat" | "istighfar" | "quran", steps: number[]) => (
-    <div className="rounded-2xl bg-white/60 border border-hairline p-4">
+    <div className="rounded-2xl bg-panel/60 border border-hairline p-4">
       <p className="text-xs uppercase tracking-[0.15em] text-brand/70 font-semibold">{label}</p>
       <input
         type="number"
@@ -213,7 +213,7 @@ function TrackerPage() {
                   key={k}
                   onClick={() => setSelected(k)}
                   className={`aspect-square rounded-xl text-sm font-semibold flex flex-col items-center justify-center gap-1 border transition ${
-                    isSel ? "bg-brand text-primary-foreground border-brand" : "bg-white/50 border-hairline text-deep hover:bg-mist"
+                    isSel ? "bg-brand text-primary-foreground border-brand" : "bg-panel/50 border-hairline text-deep hover:bg-mist"
                   } ${isToday && !isSel ? "ring-2 ring-gold" : ""}`}
                 >
                   {d.getDate()}
@@ -237,7 +237,7 @@ function TrackerPage() {
             {counter("Swalat (prayers)", "swalat", [-1, 1])}
             {counter("Istighfar", "istighfar", [10, 33, 100, -10])}
             {counter("Quran (pages)", "quran", [1, 5, 20, -1])}
-            <div className="rounded-2xl bg-white/60 border border-hairline p-4">
+            <div className="rounded-2xl bg-panel/60 border border-hairline p-4">
               <p className="text-xs uppercase tracking-[0.15em] text-brand/70 font-semibold">Wake-up time</p>
               <input
                 type="time"

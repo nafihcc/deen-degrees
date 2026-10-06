@@ -62,7 +62,7 @@ function ErrorComponent({ error, reset }: { error: unknown; reset: () => void })
           </button>
           <a
             href="/"
-            className="inline-flex items-center justify-center rounded-xl border border-hairline bg-white/60 px-4 py-2 text-sm font-medium text-deep transition-colors hover:bg-mist"
+            className="inline-flex items-center justify-center rounded-xl border border-hairline bg-panel/60 px-4 py-2 text-sm font-medium text-deep transition-colors hover:bg-mist"
           >
             Go home
           </a>
@@ -105,7 +105,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: ReactNode }) {
   // Static GitHub Pages build mounts into gh-index.html, which already owns <html>/<head>.
-  if (import.meta.env.VITE_STATIC_SPA) return <>{children}</>;
+  if (import.meta.env['VITE_STATIC_SPA']) return <>{children}</>;
   return (
     <html lang="en">
       <head>

@@ -12,6 +12,8 @@ export const Route = createFileRoute("/about")({
       { name: "description", content: "Meet Mohammed Nafih C C, the person behind Faiz. Get in touch on WhatsApp." },
       { property: "og:title", content: "About Mohammed Nafih C C | Faiz" },
       { property: "og:description", content: "Meet Mohammed Nafih C C, the person behind Faiz. Get in touch on WhatsApp." },
+      { property: "og:image", content: portraitUrl },
+      { name: "twitter:image", content: portraitUrl },
       { property: "og:type", content: "profile" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
