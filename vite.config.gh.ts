@@ -8,6 +8,7 @@ import tsconfigPaths from "vite-tsconfig-paths";
 // repository name path (e.g. /faiz/) for project pages.
 export default defineConfig({
   base: process.env["BASE_PATH"] || "/",
+  define: { "import.meta.env.VITE_STATIC_SPA": JSON.stringify("1") },
   plugins: [react(), tailwindcss(), tsconfigPaths({ projects: ["./tsconfig.json"] })],
   build: {
     outDir: "dist-gh",
