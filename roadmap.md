@@ -1,7 +1,7 @@
 # Roadmap
 
-- [ ] Add saved light/dark switch and theme all pages without green tones
-- [ ] Verify dark mode and location controls, publish website, and check GitHub Pages update
+- [x] Add saved light/dark switch and theme all pages without green tones
+- [x] Verify dark mode and location controls, publish website, and check GitHub Pages update
 
 - [x] Prayer time engine, Quran reader, Qibla, Dhikr, Calendar, Methodology pages
 - [x] Sunrise matches published azan timetables everywhere (0.833°, no adjustments)
