@@ -14,3 +14,4 @@
 - Use an absolute published asset URL for the About portrait so GitHub Pages can display it outside the origin-specific relative asset path namespace.
 - The GitHub Pages SPA build skips the root html/head shell (VITE_STATIC_SPA define); rendering <html> plus HeadContent inside #root freezes the page.
 - Theme switching applies semantic CSS tokens through the document dark class and saves only the theme preference locally, so the same control works in hosted and static Pages builds without altering tracker data.
+- Prayer alerts use public/notify-sw.js, a notification-only worker that caches nothing, so installs never serve stale pages; alerts are scheduled in the open app because static Pages has no push server.

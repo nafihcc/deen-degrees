@@ -3,6 +3,7 @@ import { useState, type ReactNode } from "react";
 import { useLocationSettings } from "@/context/location";
 import { LocationDialog } from "@/components/LocationDialog";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { AppExtras } from "@/components/AppExtras";
 
 const NAV = [
   { to: "/", label: "Prayer Times" },
@@ -45,6 +46,7 @@ export function AppShell({ children }: { children: ReactNode }) {
         </nav>
 
         <div className="flex items-center gap-2 sm:gap-3">
+          <AppExtras />
           <ThemeToggle />
           <Link to="/about" className="text-sm font-semibold text-brand hover:text-deep transition whitespace-nowrap">
             About

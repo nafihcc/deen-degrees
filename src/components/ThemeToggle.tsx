@@ -4,21 +4,16 @@ import { Button } from "@/components/ui/button";
 
 const THEME_KEY = "faiz.theme";
 
+/** Day mode is always the first view; night mode only after the user switches. */
 export function ThemeToggle() {
   const [dark, setDark] = useState(false);
 
   useEffect(() => {
-    const media = window.matchMedia("(prefers-color-scheme: dark)");
-    const apply = () => {
-      let preference: string | null = null;
-      try { preference = localStorage.getItem(THEME_KEY); } catch { /* Storage may be unavailable. */ }
-      const enabled = preference === "dark" || (preference !== "light" && media.matches);
-      document.documentElement.classList.toggle("dark", enabled);
-      setDark(enabled);
-    };
-    apply();
-    media.addEventListener("change", apply);
-    return () => media.removeEventListener("change", apply);
+    let preference: string | null = null;
+    try { preference = localStorage.getItem(THEME_KEY); } catch { /* Storage may be unavailable. */ }
+    const enabled = preference === "dark";
+    document.documentElement.classList.toggle("dark", enabled);
+    setDark(enabled);
   }, []);
 
   const toggle = () => {
