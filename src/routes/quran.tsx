@@ -38,6 +38,20 @@ interface Ayah {
   surah: SurahMeta;
 }
 
+const RECITERS = [
+  { id: "ar.alafasy", name: "Mishary Alafasy" },
+  { id: "ar.abdurrahmaansudais", name: "Abdur-Rahman As-Sudais" },
+  { id: "ar.saoodshuraym", name: "Saud Ash-Shuraim" },
+  { id: "ar.mahermuaiqly", name: "Maher Al-Muaiqly" },
+  { id: "ar.husary", name: "Mahmoud Khalil Al-Husary" },
+  { id: "ar.minshawi", name: "Mohamed Siddiq Al-Minshawi" },
+  { id: "ar.abdulbasitmurattal", name: "Abdul Basit Abdus-Samad" },
+  { id: "ar.ahmedajamy", name: "Ahmed Al-Ajamy" },
+] as const;
+const RECITER_KEY = "faiz.reciter";
+const initials = (name: string) =>
+  name.split(/[\s-]+/).filter((w) => !/^(al|as|ash|abdus|abdur)$/i.test(w)).slice(0, 2).map((w) => w[0]).join("");
+
 const toArabicDigits = (value: number) =>
   String(value).replace(/\d/g, (digit) => "٠١٢٣٤٥٦٧٨٩"[Number(digit)] ?? digit);
 
@@ -53,7 +67,29 @@ function QuranPage() {
   const [error, setError] = useState<string | null>(null);
   const [playingIndex, setPlayingIndex] = useState<number | null>(null);
   const [playingAll, setPlayingAll] = useState(false);
-  const audioRef = useRef<HTMLAudioElement>(null);
+  const [reciter, setReciter] = useState<string>("ar.alafasy");
+  // Two players alternate: while one plays, the next verse is already buffered in the other.
+  const playersRef = useRef<HTMLAudioElement[]>([]);
+  const slotRef = useRef(0);
+  const stateRef = useRef({ index: null as number | null, all: false, ayahs: [] as Ayah[] });
+
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem(RECITER_KEY);
+      if (saved && RECITERS.some((r) => r.id === saved)) setReciter(saved);
+    } catch { /* ignore */ }
+    playersRef.current = [new Audio(), new Audio()];
+    playersRef.current.forEach((audio, slot) => {
+      audio.preload = "auto";
+      audio.addEventListener("ended", () => {
+        if (slot !== slotRef.current) return;
+        const { index, all, ayahs: list } = stateRef.current;
+        if (all && index !== null && index < list.length - 1) playAtRef.current(index + 1, true);
+        else { setPlayingIndex(null); setPlayingAll(false); }
+      });
+    });
+    return () => playersRef.current.forEach((a) => { a.pause(); a.src = ""; });
+  }, []);
 
   useEffect(() => {
     fetch("https://api.alquran.cloud/v1/surah")
@@ -71,11 +107,11 @@ function QuranPage() {
     setError(null);
     setPlayingIndex(null);
     setPlayingAll(false);
-    audioRef.current?.pause();
+    playersRef.current.forEach((a) => a.pause());
     const endpoint =
       mode === "page"
-        ? `https://api.alquran.cloud/v1/page/${mushafPage}/ar.alafasy`
-        : `https://api.alquran.cloud/v1/surah/${surahNumber}/ar.alafasy`;
+        ? `https://api.alquran.cloud/v1/page/${mushafPage}/${reciter}`
+        : `https://api.alquran.cloud/v1/surah/${surahNumber}/${reciter}`;
 
     fetch(endpoint)
       .then((response) => {
@@ -98,7 +134,7 @@ function QuranPage() {
     return () => {
       cancelled = true;
     };
-  }, [mode, mushafPage, surahNumber]);
+  }, [mode, mushafPage, surahNumber, reciter]);
 
   const filteredSurahs = useMemo(() => {
     const term = query.trim().toLowerCase();
@@ -117,20 +153,45 @@ function QuranPage() {
     ).values(),
   );
 
+  stateRef.current.ayahs = ayahs;
+
   const playAt = (index: number, continueAll = false) => {
-    const audio = audioRef.current;
+    const players = playersRef.current;
     const source = ayahs[index]?.audio;
-    if (!audio || !source) return;
-    audio.src = source;
+    if (players.length < 2 || !source) return;
+    const current = players[slotRef.current]!;
+    const other = players[1 - slotRef.current]!;
+    current.pause();
+    // Use the other player if it already holds this verse (pre-buffered).
+    let audio = other;
+    if (other.src !== source) { audio = current; audio.src = source; }
+    else slotRef.current = 1 - slotRef.current;
+    audio.currentTime = 0;
+    stateRef.current.index = index;
+    stateRef.current.all = continueAll;
     setPlayingIndex(index);
     setPlayingAll(continueAll);
-    void audio.play();
+    void audio.play().catch(() => {});
+    const idle = players[1 - slotRef.current]!;
+    const nextSource = ayahs[index + 1]?.audio;
+    if (continueAll && nextSource && idle.src !== nextSource) { idle.src = nextSource; idle.load(); }
+  };
+  const playAtRef = useRef(playAt);
+  playAtRef.current = playAt;
+
+  const pauseAll = () => playersRef.current.forEach((a) => a.pause());
+
+  const chooseReciter = (id: string) => {
+    pauseAll();
+    setReciter(id);
+    try { localStorage.setItem(RECITER_KEY, id); } catch { /* ignore */ }
   };
 
   const toggleAll = () => {
-    const audio = audioRef.current;
+    const audio = playersRef.current[slotRef.current];
     if (playingAll && audio && !audio.paused) {
       audio.pause();
+      stateRef.current.all = false;
       setPlayingAll(false);
       return;
     }
@@ -138,7 +199,7 @@ function QuranPage() {
   };
 
   const toggleAyah = (index: number) => {
-    const audio = audioRef.current;
+    const audio = playersRef.current[slotRef.current];
     if (playingIndex === index && audio && !audio.paused) {
       audio.pause();
       setPlayingIndex(null);
@@ -157,22 +218,10 @@ function QuranPage() {
 
   return (
     <main className="mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-10">
-      <audio
-        ref={audioRef}
-        onEnded={() => {
-          if (playingAll && playingIndex !== null && playingIndex < ayahs.length - 1) {
-            playAt(playingIndex + 1, true);
-          } else {
-            setPlayingIndex(null);
-            setPlayingAll(false);
-          }
-        }}
-      />
-
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <h1 className="font-display text-4xl font-semibold text-deep">The Noble Quran</h1>
-          <p className="mt-1 text-sm text-deep/60">Arabic Mushaf with Mishary Alafasy recitation</p>
+          <p className="mt-1 text-sm text-deep/60">Arabic Mushaf with recitation by {RECITERS.find((r) => r.id === reciter)?.name}</p>
         </div>
         <Button
           variant="outline"
@@ -214,7 +263,25 @@ function QuranPage() {
         </section>
       )}
 
-      <section className="mt-6 overflow-hidden rounded-md border border-hairline bg-card shadow-sm">
+      <section className="mt-6" aria-label="Choose a reciter">
+        <h2 className="text-sm font-semibold text-deep/70">Reciter</h2>
+        <div className="mt-2 flex gap-3 overflow-x-auto pb-2">
+          {RECITERS.map((r) => {
+            const active = r.id === reciter;
+            return (
+              <button key={r.id} type="button" onClick={() => chooseReciter(r.id)} aria-pressed={active}
+                className={`flex w-24 shrink-0 flex-col items-center gap-2 rounded-md border p-2 text-center transition ${active ? "border-brand bg-mist" : "border-hairline bg-card hover:bg-mist"}`}>
+                <span className={`grid size-14 place-items-center rounded-full font-display text-lg font-semibold ${active ? "bg-brand text-primary-foreground" : "bg-mist text-brand"}`}>
+                  {initials(r.name)}
+                </span>
+                <span className="text-[11px] leading-tight text-deep">{r.name}</span>
+              </button>
+            );
+          })}
+        </div>
+      </section>
+
+      <section className="mt-4 overflow-hidden rounded-md border border-hairline bg-card shadow-sm">
         <header className="flex flex-wrap items-center justify-between gap-3 border-b border-hairline px-4 py-3 sm:px-6">
           <div className="flex rounded-md bg-mist p-1" aria-label="Reading mode">
             <Button
