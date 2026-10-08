@@ -17,3 +17,5 @@
 - [x] GitHub Pages live deployment — workflow publishing verified at the repository Pages URL
 - [x] Complete English README for GitHub without naming the site builder; credit vibe coding
 - [x] Make the About page visibly reachable from the header at desktop and mobile widths
+
+- [x] Day mode default, reciter picker with gapless playback, install banner, prayer alerts (at time + 15 min before)
